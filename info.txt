@@ -1,0 +1,6 @@
+Virtual Environment 
+  start:- py -m venv venv 
+  activate:- venv\Scripts\activate
+  install django:- pip install django 
+  start:- django-admin startproject <project_name> . 
+      
