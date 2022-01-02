@@ -4,3 +4,6 @@ Virtual Environment
   install django:- pip install django 
   start:- django-admin startproject <project_name> . 
       
+
+ Adding view to every page in django 
+    
