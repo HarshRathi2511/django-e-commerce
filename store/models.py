@@ -16,6 +16,7 @@ class Category(models.Model):
 # The related_name attribute specifies the name of the reverse relation from the Category
 #  model back to your Product,otherwise default product_set()
 class Product(models.Model):
+    price = models.DecimalField(decimal_places=2,max_digits=6,default=0)
     category = models.ForeignKey(Category,related_name='product',on_delete=models.CASCADE)
     created_by = models.ForeignKey(Vendor,related_name='product_creator',on_delete=models.CASCADE)
     title = models.CharField(max_length=250)
