@@ -14,16 +14,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',include('store.urls',namespace='store',))
 ]
+# Using namespace in the include() allows you to include the same app more than once, with a different 
+# namespace for each instance.
 
-
+# Auto-add the applications.
+# for app in settings.LOCAL_APPS:
+#     urlpatterns += patterns('',
+#         url(r'^{0}/'.format(app), include(app + '.urls', namespace=app)),
+#     )
 if settings.DEBUG:  # allows the static files to work in the browser
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
