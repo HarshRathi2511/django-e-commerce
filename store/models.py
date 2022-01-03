@@ -1,5 +1,6 @@
-from django.db import models
 
+from django.db import models
+from django.urls import reverse
 from vendor.models import Vendor
 
 # Create your models here.
@@ -31,3 +32,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title  
+
+    def get_absolute_url(self):
+        return reverse('store:product_detail',args=[self.slug])
+        

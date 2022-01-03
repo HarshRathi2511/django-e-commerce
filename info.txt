@@ -6,4 +6,42 @@ Virtual Environment
       
 
  Adding view to every page in django 
-    
+
+///////////
+ First of all, when it comes to web development you really want to avoid hard coding paths in your templates. The reason for this is that paths might change, and it will be a hassle to go through all your HTML and templates to find every single URL or path and update it manually. It makes your code much harder to maintain.
+
+The solution to this is to define functions that return the URL instead. This is where get_absolute_url() comes into the picture.
+
+Example:
+
+<!-- Bad -->
+<a href="/language/category/product/{{product.pk}}">Link</a>
+
+<!-- Good -->
+<a href="{{product.get_absolute_url}}">Link</a>
+
+//////////////
+
+URL ROUTING AND TEMPLATING 
+
+Up until now, we have been hardcoding URLs in our templates. At a later date, If we want to update the URL structure we would have to manually visit each and every template. This problem can be solved easily by using the url tag in the templates.
+
+
+The url tag helps us to generate links in the templates. It has the following syntax:
+
+URL TAG 
+Syntax: {% url 'url_name' arg1 arg2 %}
+
+where url_name is the value we passed to the name keyword argument of the url() function. 
+The arg1 and arg1 are additional arguments required by the view function. On success, 
+it returns part of the URL without host portion. If it can't create URL NoReverseMatch 
+exception is thrown.
+
+
+The reverse() function
+What if a need arises to generate URLs in the in the Python code, for example in a view 
+function? To create URLs in Python code we use the reverse() function.
+
+{% url 'new_patter' arg1 arg2 arg2 %}  parameter passing 
+
+reverse('<app_name>: post_by_category', args=['css'])
