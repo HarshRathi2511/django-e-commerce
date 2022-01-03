@@ -1,17 +1,16 @@
 from django.db import models
 from store.models import Product,Category
 from django.contrib.auth.models import User
-
+from django.shortcuts import get_object_or_404, render
 
 # whenever add to cart pressed product becomes an OrderItem
 class OrderItem(models.Model):  # link between the product and the order
     item = models.ForeignKey(Product,on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return self.title
-
-
-
+        return f"{self.quantity} of {self.item.title}"
+ 
 
 # final cart
 class Order(models.Model):

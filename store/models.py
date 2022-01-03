@@ -30,6 +30,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=250)
     in_stock= models.BooleanField(default=True)
     created_date_time = models.DateTimeField(auto_now_add=True)
+  
 
     class Meta:
         ordering=['-created_date_time']
@@ -39,4 +40,6 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('store:product_detail',args=[self.slug])
-        
+
+    def get_add_to_cart_url(self):
+        return reverse('cart:add-to-cart',args=[self.slug])

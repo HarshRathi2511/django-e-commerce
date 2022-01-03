@@ -1,4 +1,6 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
+
+from cart.models import OrderItem,Order
 from .models import Category,Product
 from django.views.generic import DetailView
 
@@ -29,3 +31,7 @@ def products_by_category(request,slug):
     products_of_selected_category = Product.objects.filter(category=category)
     print(products_of_selected_category)
     return render(request,'store/category.html',{'products':products_of_selected_category})
+
+
+
+
