@@ -21,7 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('store.urls',namespace='store',))
+    path('',include('store.urls',namespace='store',)),
+    path('cart/',include('cart.urls',namespace='cart')),
 ]
 # Using namespace in the include() allows you to include the same app more than once, with a different 
 # namespace for each instance.
