@@ -14,6 +14,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name 
 
+    def get_absolute_url(self):
+        return reverse('store:category_products', args=[self.slug])
+        
+
 # The related_name attribute specifies the name of the reverse relation from the Category
 #  model back to your Product,otherwise default product_set()
 class Product(models.Model):

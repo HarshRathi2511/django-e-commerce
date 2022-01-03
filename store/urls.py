@@ -5,6 +5,7 @@ app_name = 'store'
 
 urlpatterns = [
     path('',views.home_products,name= 'home_products'), 
-    path('grocery/<slug:slug>',views.product_detail,name= 'product_detail')
+    path('grocery/<slug:slug>',views.product_detail,name= 'product_detail'),
     # <slug:slug> => var and the name 
+    path('category/<slug:slug>',views.products_by_category,name='category_products')
 ]

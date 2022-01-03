@@ -23,3 +23,9 @@ def product_detail(request,slug):
     #       return Record.objects.get(id=self.request.query_params['id'])
     #     except Record.DoesNotExist:
     #       raise Http404()
+
+def products_by_category(request,slug):
+    category= get_object_or_404(Category,slug=slug)   
+    products_of_selected_category = Product.objects.filter(category=category)
+    print(products_of_selected_category)
+    return render(request,'store/category.html',{'products':products_of_selected_category})
