@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import request
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
@@ -7,14 +8,23 @@ from django.views.generic.base import View
 from cart.models import OrderItem, Order
 from .models import Category, Product
 from django.views.generic import DetailView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
 class OrderSummaryView(View):
     def get(self,*args,**kwargs):
-        return render(self.request,'cart/order_summary.html')
-    # model=Order
-    # template_name= 'order_summary'
+        #add checks 
+        try:
+            orders = Order.objects.get(user=self.request.user,ordered=False)
+            context={'orders':orders}
+            return render(self.request,'cart/order_summary.html',context)
+        except ObjectDoesNotExist:
+            messages.info(self.request,"You do not have any active items in the cart")
+            return redirect('store:home_products')    
+       
+    
 
 # def order_summary_view(request):
 #       return render(request,'store/order_summary.html')
