@@ -43,3 +43,6 @@ class Product(models.Model):
 
     def get_add_to_cart_url(self):
         return reverse('cart:add-to-cart',args=[self.slug])
+
+    def get_remove_from_cart_url(self):
+        return reverse('cart:remove-from-cart',args=[self.slug])    
