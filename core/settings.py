@@ -132,7 +132,7 @@ MEDIA_URL ='/media/'
 MEDIA_ROOT =os.path.join(BASE_DIR,'media/')
 
 #redirecting users after login 
-LOGIN_REDIRECT_URL = 'store:home_products'  
+LOGIN_REDIRECT_URL = 'register-address'  
 
 
 LOGIN_URL ='login'

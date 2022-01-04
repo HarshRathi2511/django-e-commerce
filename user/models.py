@@ -4,7 +4,7 @@ from django.urls import reverse
 
 #Create the address model here 
 class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     apartment = models.CharField(max_length=100)
     street = models.CharField(max_length=100)
     city=models.CharField(max_length=100)
