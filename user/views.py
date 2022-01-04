@@ -3,12 +3,41 @@ from django.db.models import fields
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-
+from cart.models import Order
 from user.models import Address
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, ProfileUpdateForm
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+
+# def profile(request):
+#   # when a profile returns data from the post request then it is accesed in the same view using the request.Methof
+#      if request.method == 'POST':  #what to run after the information is posted and we passed in the new data 
+#       #  instances to know what profiles to update 
+#       # request.FILES gets the file data from the user 
+#       # request.POST is the post data the user updates 
+#           p_form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
+#           # populate the forms with the data collected from the user 
+#           if p_form.is_valid():        
+#             p_form.save()
+#             messages.success(
+#               request, f'Your profile has been updated ')
+#           # redirect them to the profile page after creating the account
+#             return redirect('profile')
+#      else: 
+#            p_form = ProfileUpdateForm(instance=request.user.profile)
+
+#      context = {
+#       'p_form':p_form,
+#      }
+#      return render(request,'user/profile.html',context) 
+
+def profile(request):
+    orders_by_user= Order.objects.filter(user=request.user,ordered=True)
+    context={
+        'orders':orders_by_user
+    }
+    return render(request,'user/profile.html',context)
 
 def register(request):
     if request.method == 'POST':

@@ -24,5 +24,12 @@ class Address(models.Model):
 
 
 # Create the profile model here 
+class Profile(models.Model):
+    user= models.ForeignKey(User,on_delete=models.CASCADE,related_name='profile')
+    balance = models.DecimalField(decimal_places=2,default=200,max_digits=5)
+
+    def __str__(self) :
+      return f'{self.user.username}\'s Profile'
+
 
 

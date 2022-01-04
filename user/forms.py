@@ -5,7 +5,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from user.models import Address
+from user.models import Address, Profile
 
 
 class CustomUserCreationForm(forms.Form):
@@ -46,8 +46,7 @@ class CustomUserCreationForm(forms.Form):
         return user
 
 
-
-# class UserAddressForm(forms.ModelForm):
-#     class Meta:
-#         model = Address
-#         fields = "__all__"     
+class ProfileUpdateForm(forms.ModelForm)  :
+    class Meta:
+        model= Profile 
+        fields=['balance']  

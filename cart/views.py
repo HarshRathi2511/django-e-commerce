@@ -19,7 +19,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
         #add checks 
         try:
             orders = Order.objects.get(user=self.request.user,ordered=False)
-            address = get_object_or_404(Address,user=self.request.user)
+            address = Address.objects.filter(user=self.request.user)[0]
             context={'orders':orders,'address':address}
             return render(self.request,'cart/order_summary.html',context)
         except ObjectDoesNotExist:
@@ -167,3 +167,20 @@ def add_single_item_to_cart(request, slug):
         messages.info(request, "Item added to cart")
         return redirect("cart:order-summary")
 
+
+
+#final checkout and set the order 
+def final_checkout(request):
+    order_qs = Order.objects.filter(
+        user=request.user,
+        ordered=False
+    )
+    if order_qs.exists():
+        # for order_item in order_qs.objects.all():           
+        #     order_item.update(ordered=True)
+        order_qs.update(ordered=True)
+        messages.info(request,'Your order has been placed !')  
+    else:
+        messages.info(request,'Something went wrong !')      
+
+    return redirect('store:home_products')        
