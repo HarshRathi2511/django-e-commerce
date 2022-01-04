@@ -28,6 +28,7 @@ class AddressCreateView(LoginRequiredMixin, CreateView):
     model = Address
     fields = ['apartment', 'street', 'city', 'country', 'pin', ]
     template_name = 'user/register_address.html',
+    success_url='/'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -39,7 +40,7 @@ class UpdateUserAddress(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
     model = Address
     fields=['apartment','street','city','country','pin',]
     template_name='user/update_user_address.html',
-    # success_url ="/"
+    success_url = '/cart/order-summary'
 
     def test_func(self):
         address = self.get_object() #Return the object the view is displaying.  

@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.generic.base import View
 from cart.models import OrderItem, Order
+from user.models import Address
 from .models import Category, Product
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
@@ -18,7 +19,8 @@ class OrderSummaryView(LoginRequiredMixin,View):
         #add checks 
         try:
             orders = Order.objects.get(user=self.request.user,ordered=False)
-            context={'orders':orders}
+            address = get_object_or_404(Address,user=self.request.user)
+            context={'orders':orders,'address':address}
             return render(self.request,'cart/order_summary.html',context)
         except ObjectDoesNotExist:
             messages.info(self.request,"You do not have any active items in the cart")

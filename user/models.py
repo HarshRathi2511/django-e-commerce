@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 #Create the address model here 
 class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,unique=True)
     apartment = models.CharField(max_length=100)
     street = models.CharField(max_length=100)
     city=models.CharField(max_length=100)
@@ -13,6 +14,11 @@ class Address(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+    def get_absolute_update_url(self):
+        return reverse("update-address", kwargs={"pk": self.pk})
+    
+
     class Meta:
         verbose_name_plural = 'Addresses'
 
