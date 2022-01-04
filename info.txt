@@ -52,3 +52,31 @@ Two ways for a view function to work
 :- It loads the template with the desired objects (render)
 :- we can redirect the same template ,and just make sure that the url function 
   having the desired functionality can be called on a press of a button etc 
+
+
+
+GENERIC VIEWS 
+from django.views.generic.edit import CreateView
+from .models import GeeksModel
+
+class GeeksCreate(CreateView):
+
+	# specify the model for create view
+	model = GeeksModel
+
+	# specify the fields to be displayed
+
+	fields = ['title', 'description']
+
+  <form method="POST" enctype="multipart/form-data">
+
+    <!-- Security token -->
+    {% csrf_token %}
+  
+    <!-- Using the formset -->
+    {{ form.as_p }}
+    
+    <input type="submit" value="Submit">
+  </form>
+  
+

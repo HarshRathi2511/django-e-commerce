@@ -3,6 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from django.core.exceptions import ValidationError
+from django.db import models
+
+from user.models import Address
 
 
 class CustomUserCreationForm(forms.Form):
@@ -41,3 +44,10 @@ class CustomUserCreationForm(forms.Form):
             self.cleaned_data['password1'],
         )
         return user
+
+
+
+# class UserAddressForm(forms.ModelForm):
+#     class Meta:
+#         model = Address
+#         fields = "__all__"     

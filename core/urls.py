@@ -38,9 +38,11 @@ urlpatterns = [
     # path('profile/',user_views.profile,name='profile'),
     path('register/',user_views.register,name='register'),
 
+
+    #path for address 
+    path('register-address/',user_views.AddressCreateView.as_view(),name ='register-address')
+
 ]
-
-
 
 
 
