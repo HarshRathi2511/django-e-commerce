@@ -13,7 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
-class OrderSummaryView(View):
+class OrderSummaryView(LoginRequiredMixin,View):
     def get(self,*args,**kwargs):
         #add checks 
         try:
@@ -23,12 +23,11 @@ class OrderSummaryView(View):
         except ObjectDoesNotExist:
             messages.info(self.request,"You do not have any active items in the cart")
             return redirect('store:home_products')    
-       
-    
 
-# def order_summary_view(request):
-#       return render(request,'store/order_summary.html')
-# slug is the product slug
+# TWO WAYS OF REDIRECTING :-
+# (login_url='/example url you want redirect/') #redirect when user is not logged in   
+# Change LOGIN_URL in settings.py          
+@login_required
 def add_to_cart(request, slug):
     # get the product and create the order item
     product = get_object_or_404(Product, slug=slug)
@@ -67,6 +66,7 @@ def add_to_cart(request, slug):
 
 
 # SOME STUPID BUG HERE 
+@login_required
 def remove_from_cart(self, slug):
     item = get_object_or_404(Product, slug=slug)
     order_qs = Order.objects.filter(
