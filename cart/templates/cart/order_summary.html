@@ -24,11 +24,16 @@
 
               <li class="list-group-item d-flex justify-content-between lh-sm">
                 <div>
-                  <h6 class="my-0">{{order_item.item.title}} X {{ order_item.quantity}}</h6>
+                  <h6 class="my-0">{{order_item.item.title}} X {{ order_item.quantity}}....................
+                    <a href="{% url 'cart:add-single-item-to-cart' order_item.item.slug %}"> + </a>
+                      .......
+                      <a href="{% url 'cart:remove-single-item-from-cart' order_item.item.slug %}">-</a>
+                    </h6>
                   <small class="text-muted">{{order_item.item.description}}</small>
                 </div>
                 <span class="text-muted">${{order_item.get_price_of_product}}</span>
               </li>
+             
 
                {% endfor %}
      

@@ -45,4 +45,7 @@ class Product(models.Model):
         return reverse('cart:add-to-cart',args=[self.slug])
 
     def get_remove_from_cart_url(self):
-        return reverse('cart:remove-from-cart',args=[self.slug])    
+        return reverse('cart:remove-from-cart',args=[self.slug])   
+
+    def remove_single_item_from_cart_url(self): 
+        return reverse('cart:remove-single-item-from-cart',args=[self.slug])    
