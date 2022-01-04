@@ -3,16 +3,21 @@ from django.http import request
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.views.generic.base import View
 from cart.models import OrderItem, Order
 from .models import Category, Product
 from django.views.generic import DetailView
 # Create your views here.
 
 
-def cart_summary(request):
-    return render(request, 'cart/summary.html')
+class OrderSummaryView(View):
+    def get(self,*args,**kwargs):
+        return render(self.request,'cart/order_summary.html')
+    # model=Order
+    # template_name= 'order_summary'
 
-
+# def order_summary_view(request):
+#       return render(request,'store/order_summary.html')
 # slug is the product slug
 def add_to_cart(request, slug):
     # get the product and create the order item
