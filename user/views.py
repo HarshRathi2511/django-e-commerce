@@ -35,7 +35,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 def profile(request):
     orders_by_user= Order.objects.filter(user=request.user,ordered=True)
     context={
-        'orders':orders_by_user
+        'total_orders':orders_by_user
     }
     return render(request,'user/profile.html',context)
 

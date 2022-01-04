@@ -41,8 +41,10 @@ urlpatterns = [
 
     #path for address 
     path('register-address/',user_views.AddressCreateView.as_view(template_name='user/register_address.html'),name ='register-address'),
-    path('update-address/<int:pk>',user_views.UpdateUserAddress.as_view(template_name='user/register_address.html'),name ='update-address')
+    path('update-address/<int:pk>',user_views.UpdateUserAddress.as_view(template_name='user/register_address.html'),name ='update-address') ,
 
+    #path for vendors 
+    path('vendor/',include('vendor.urls',namespace='vendor')),
 ]
 
 
