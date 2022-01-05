@@ -3,6 +3,8 @@ from store.models import Product,Category
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render
 
+from vendor.models import Vendor
+
 # whenever add to cart pressed product becomes an OrderItem
 class OrderItem(models.Model):  # link between the product and the order
     item = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='order_item')
@@ -10,6 +12,7 @@ class OrderItem(models.Model):  # link between the product and the order
     quantity = models.PositiveIntegerField(default=1)
     user= models.ForeignKey(User,on_delete=models.CASCADE)
     ordered= models.BooleanField(default=False)
+    # vendor = models.ForeignKey(Vendor, related_name='items', on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.quantity} :- {self.item.title}"
@@ -24,6 +27,7 @@ class Order(models.Model):
     ordered= models.BooleanField(default=False)
     items= models.ManyToManyField(OrderItem)
     ordered_date= models.DateTimeField()
+    # vendors = models.ManyToManyField(Vendor, related_name='orders')
 
     def __str__(self):
         return f"Order by :-{self.user.email}"

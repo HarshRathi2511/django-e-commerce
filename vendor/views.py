@@ -67,14 +67,25 @@ def become_vendor(request):
 
 @login_required
 def vendor_profile(request):
-    # vendor = get_object_or_404(Vendor,created_by=request.user)
+    # get the vendor
     vendor = request.user.vendor
+    #get the products of the vendor
     products= vendor.products.all()
-    # orders= vendor.orders.all()
+    
 
+    order_list = list()
+    for product in products:
+        print('@@@@@@@@@)')
+        print(product.order_item)
+
+        order_list.append(product.order_item)
+
+    print('############3') 
+    print(order_list)
     context={
         'vendor':vendor,
         'products':products,
-        # 'orders':orders
+        'orders':order_list
     }
+    
     return render(request,'vendor/profile.html',context)   

@@ -49,34 +49,34 @@
     <div class="box">
         <h2 class="is-size-3 mb-4">My orders</h2>
     
-        {% comment %} {% if orders %}
+        {% if orders %}
             {% for order in orders %}
-                <div class="{% if order.fully_paid %}has-background-success-light{% else %}has-background-info-light{% endif %} mb-2 p-4">
                     <div class="columns is-multiline">
                         <div class="column is-6">
-                            <h3 class="is-size-4">#{{ order.id }} - {{ order.first_name }} {{ order.last_name }}</h3>
+                           
                         </div>
     
                         <div class="column is-12">
-                            <b>Name:</b> {{ order.first_name }} {{ order.last_name }}<br>
+                           {% comment %} <br> <b>Name:</b> {{ order.user.email}} <br>
                             <b>Address:</b> {{ order.address }}<br>
                             <b>Zip and place:</b> {{ order.zipcode }} {{ order.place }}<br>
                             <b>E-mail:</b> {{ order.email }}<br>
-                            <b>Phone:</b> {{ order.phone }}
-    
+                            <b>Phone:</b> {{ order.phone }} {% endcomment %}
+                            
+                            
+
                             <table class="table is-fullwidth mt-4">
                                 <thead>
                                     <tr>
-                                        <th>Title</th>
+                                        <th>Title -</th>
                                         <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Paid</th>
+                                        <th>Quantity  {{ order.quantity }}</th>                               
                                         <th>Total</th>
                                     </tr>
                                 </thead>
     
                                 <tbody>
-                                    {% for item in order.items.all %}
+                                    {% comment %} {% for item in order.items.all %}
                                         {% if item.vendor == request.user.vendor %}
                                             <tr>
                                                 <td>{{ item.product.title }}</td>
@@ -86,13 +86,15 @@
                                                 <td>${{ item.get_total_price }}</td>
                                             </tr>
                                         {% endif %}
-                                    {% endfor %}
+                                    {% endfor %} {% endcomment %}
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
+                
             {% endfor %}
-        {% endif %} {% endcomment %}
+        {% else %}   
+          <h3>You do not have any orders</h3> 
+        {% endif %} 
     </div>
 {% endblock %}
