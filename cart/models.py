@@ -5,7 +5,8 @@ from django.shortcuts import get_object_or_404, render
 
 # whenever add to cart pressed product becomes an OrderItem
 class OrderItem(models.Model):  # link between the product and the order
-    item = models.ForeignKey(Product,on_delete=models.CASCADE)
+    item = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='order_item')
+    #get the order item by product.order_item 
     quantity = models.PositiveIntegerField(default=1)
     user= models.ForeignKey(User,on_delete=models.CASCADE)
     ordered= models.BooleanField(default=False)

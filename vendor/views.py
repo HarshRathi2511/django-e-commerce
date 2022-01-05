@@ -20,18 +20,6 @@ from .forms import ProductForm
 from django.utils.text import slugify
 
 
-# class VendorRegisterView(LoginRequiredMixin, CreateView):
-#     model = Vendor
-#     fields = ['shop_name']
-#     template_name = 'vendor/register.html',
-#     success_url='vendor:vendor-profile'
-
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super().form_valid(form)
-     
-
-
 @login_required
 def add_product(request):
     if request.method=='POST':
@@ -59,23 +47,6 @@ def delete_product(request,slug):
     messages.info(request,'Your product has been deleted')
     return redirect('vendor:vendor-profile')
 
-class ProductUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
-    model = Product
-    fields=['title','price','category','description','image','in_stock']
-
-    def form_valid(self,form) :
-        form.instance.created_by =self.request.user       
-        return super().form_valid(form)
-        
-    #to ensure that the vendor only updates his created product    
-    # def test_func(self):
-    #     product = self.get_object() #Return the object the view is displaying.  
-    #     if product.created_by.user == self.request.user:
-    #         return True
-    #     return False        
-
-
-
 def become_vendor(request):
     if request.method=='POST':
         form = UserCreationForm(request.POST)
@@ -99,8 +70,11 @@ def vendor_profile(request):
     # vendor = get_object_or_404(Vendor,created_by=request.user)
     vendor = request.user.vendor
     products= vendor.products.all()
+    # orders= vendor.orders.all()
+
     context={
         'vendor':vendor,
-        'products':products
+        'products':products,
+        # 'orders':orders
     }
     return render(request,'vendor/profile.html',context)   

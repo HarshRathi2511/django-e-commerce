@@ -83,3 +83,21 @@ class GeeksCreate(CreateView):
 
 FORMAT TO AVOID STUPID TUPLE ERROR 
   path('register/',views.VendorRegisterView.as_view(template_name = 'vendor/register.html'),name='vendor-register'),
+
+
+
+RELATED NAME 
+
+The related_name attribute specifies the name of the reverse relation from the User 
+model back to your model.
+
+If you don't specify a related_name, Django automatically creates one using
+ the name of your model with the suffix _set, for instance User.map_set.all().
+
+If you do specify, e.g. related_name=maps on the User model, 
+User.map_set will still work, but the User.maps. syntax is obviously a bit cleaner 
+and less clunky; so for example, if you had a user object current_user, 
+you could use current_user.maps.all() to get all instances of your Map model 
+that have a relation to current_user.
+
+The Django documentation has more details.
