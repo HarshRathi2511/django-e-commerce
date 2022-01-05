@@ -15,6 +15,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login 
+from .forms import ProductForm
+
+from django.utils.text import slugify
 
 
 # class VendorRegisterView(LoginRequiredMixin, CreateView):
@@ -29,15 +32,24 @@ from django.contrib.auth import login
      
 
 
+@login_required
+def add_product(request):
+    if request.method=='POST':
+        form = ProductForm(request.POST,request.FILES)
 
-class ProductCreateView(LoginRequiredMixin,CreateView):
-    model = Product
-    fields=['title','price','category','description','image','in_stock']
-    success_url= ''
-
-    def form_valid(self,form) :
-        form.instance.created_by =self.request.user       
-        return super().form_valid(form)
+        if form.is_valid():
+            #not yet put the changes to the database ,otherwise crash
+            product= form.save(commit=False )
+            #add the vendor
+            product.created_by=request.user.vendor
+            #add the slug
+            product.slug= slugify(product.title)
+            #commit the changes to the DB
+            product.save()
+            return redirect('vendor:vendor-profile')
+    else:
+        form =ProductForm()        
+    return render(request,'vendor/add_product.html',{'form':form})
 
    
 class ProductUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
