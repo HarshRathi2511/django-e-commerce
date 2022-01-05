@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import fields
@@ -7,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from cart.models import Order, OrderItem
 from store.models import Product
 from user.models import Address
-from .forms import CustomUserCreationForm, ProfileUpdateForm, ReviewForm
+from .forms import CustomUserCreationForm, ProfileForm, ReviewForm
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -106,3 +107,20 @@ def write_review(request,slug):
     else:
         form =ReviewForm()        
     return render(request,'user/write-review.html',{'form':form})    
+
+@login_required
+def make_profile(request):
+    if request.method=='POST':
+        form = ProfileForm(request.POST)
+
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user= request.user
+            money_added= form.cleaned_data['balance']
+            messages.info(request,f"Added {money_added} dollars to your account !!")
+            profile.save()
+    
+    else:
+        form: ProfileForm()
+
+

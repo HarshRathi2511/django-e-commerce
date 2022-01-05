@@ -15,6 +15,8 @@ class CustomUserCreationForm(forms.Form):
     password1 = forms.CharField(label='Enter password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
 
+#  form.cleaned_data returns a dictionary of validated form input fields 
+# and their values, where string primary keys are returned as objects.
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
         r = User.objects.filter(username=username)
@@ -47,7 +49,7 @@ class CustomUserCreationForm(forms.Form):
         return user
 
 
-class ProfileUpdateForm(forms.ModelForm)  :
+class ProfileForm(forms.ModelForm)  :
     class Meta:
         model= Profile 
         fields=['balance']  
