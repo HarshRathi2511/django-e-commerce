@@ -19,7 +19,8 @@ def home_products(request):   #HttpRequest instance
 
 def product_detail(request,slug):
     product= get_object_or_404(Product,slug=slug,in_stock=True)
-    return render(request,'store/detail.html',{'product':product})
+    reviews = product.review.all()
+    return render(request,'store/detail.html',{'product':product,'reviews':reviews})
     # Alternative to 404
     #  try:
     #       return Record.objects.get(id=self.request.query_params['id'])
