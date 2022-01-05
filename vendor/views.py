@@ -46,12 +46,19 @@ def add_product(request):
             product.slug= slugify(product.title)
             #commit the changes to the DB
             product.save()
+            messages.info(request,'Your product has been added successfully')
             return redirect('vendor:vendor-profile')
     else:
         form =ProductForm()        
     return render(request,'vendor/add_product.html',{'form':form})
 
-   
+@login_required
+def delete_product(request,slug):
+    product= get_object_or_404(Product,slug=slug)
+    product.delete()
+    messages.info(request,'Your product has been deleted')
+    return redirect('vendor:vendor-profile')
+
 class ProductUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
     model = Product
     fields=['title','price','category','description','image','in_stock']

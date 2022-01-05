@@ -14,6 +14,7 @@ urlpatterns = [
     path('login',auth_views_vendor.LoginView.as_view(template_name='vendor/login.html'),name ='vendor-login'),
     
     #creating products
-    path('add-product',views.add_product,name='add-product')
+    path('add-product',views.add_product,name='add-product'),
+    path('delete-product/<slug:slug>',views.delete_product,name='delete-product'),
 
 ]

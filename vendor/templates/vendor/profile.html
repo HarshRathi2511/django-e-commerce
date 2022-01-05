@@ -25,6 +25,7 @@
                 <thead>
                     <tr>
                         <th>Title</th>
+                        <th>Delete</th>
                         <th>Price</th>
                     </tr>
                 </thead>
@@ -34,7 +35,7 @@
                         <tr>
                             {% comment %} <td><a href="{% url 'product' product.category.slug product.slug %}">{{ product.title }}</a></td> {% endcomment %}
                             <td>{{ product.title }}</a></td>
-
+                            <td><a href = "{% url 'vendor:delete-product' product.slug %}">Delete</a></td>
                             <td>${{ product.price }}</td>
                         </tr>
                     {% endfor %}

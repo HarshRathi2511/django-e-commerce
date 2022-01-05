@@ -48,4 +48,7 @@ class Product(models.Model):
         return reverse('cart:remove-from-cart',args=[self.slug])   
 
     def remove_single_item_from_cart_url(self): 
-        return reverse('cart:remove-single-item-from-cart',args=[self.slug])    
+        return reverse('cart:remove-single-item-from-cart',args=[self.slug])  
+        
+    def get_delete_product_url(self):
+        return reverse('vendor:delete-product',args=[self.slug])    
