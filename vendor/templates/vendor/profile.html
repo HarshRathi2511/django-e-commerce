@@ -1,0 +1,27 @@
+{% extends "store/base.html "%}
+{% block content %} `
+<h1>Vendor Profile </h1>
+<div class="content-section">
+   <div class="media">
+      <div class="media-body">
+         <h5 class="account-heading">{{vendor.shop}}</h5>
+         <p class="text-secondary">{{vendor.user.email}}</p>
+      </div>
+   </div>
+
+{% comment %} <h2>Your previous orders</h2>
+  {% for order_qs in total_orders %}
+  <li class="list-group-item d-flex justify-content-between lh-sm">
+   <div>
+     <h6 class="my-0"> {{order_qs.ordered_date}} </h6>
+   </div>
+
+   <small class="text-muted">{{order_qs.get_num_of_cart_items}}</small>
+   <span class="text-muted">{{order_qs.get_total_price_of_cart}}</span>
+
+ </li>
+
+  {% endfor %} {% endcomment %}
+
+</div>
+{% endblock content%}

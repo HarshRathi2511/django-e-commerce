@@ -80,3 +80,6 @@ class GeeksCreate(CreateView):
   </form>
   
 
+
+FORMAT TO AVOID STUPID TUPLE ERROR 
+  path('register/',views.VendorRegisterView.as_view(template_name = 'vendor/register.html'),name='vendor-register'),
