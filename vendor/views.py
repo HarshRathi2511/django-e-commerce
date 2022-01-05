@@ -26,14 +26,7 @@ from django.contrib.auth import login
 #     def form_valid(self, form):
 #         form.instance.user = self.request.user
 #         return super().form_valid(form)
-
-def vendor_profile(request):
-    vendor = get_object_or_404(Vendor,user=request.user)
-    vendor_user = vendor.user
-    context={
-        'vendor':vendor
-    }
-    return render(request,'vendor/profile.html',context)        
+     
 
 
 
@@ -80,3 +73,13 @@ def become_vendor(request):
     else:
         form =UserCreationForm()        
     return render(request,'vendor/register.html',{'form':form})
+
+
+@login_required
+def vendor_profile(request):
+    # vendor = get_object_or_404(Vendor,created_by=request.user)
+    vendor = request.user.vendor
+    context={
+        'vendor':vendor
+    }
+    return render(request,'vendor/profile.html',context)   
