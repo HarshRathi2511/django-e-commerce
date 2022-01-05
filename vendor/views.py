@@ -79,7 +79,9 @@ def become_vendor(request):
 def vendor_profile(request):
     # vendor = get_object_or_404(Vendor,created_by=request.user)
     vendor = request.user.vendor
+    products= vendor.products.all()
     context={
-        'vendor':vendor
+        'vendor':vendor,
+        'products':products
     }
     return render(request,'vendor/profile.html',context)   

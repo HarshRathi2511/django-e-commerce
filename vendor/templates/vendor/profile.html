@@ -1,4 +1,4 @@
-{% extends 'store/base.html' %}
+{% extends 'vendor/vendor-base.html' %}
 
 {% block title %}Vendor admin | {% endblock %}
 
@@ -11,14 +11,14 @@
 
         <hr>
 
-        {% comment %} <a href="{% url 'edit_vendor' %}" class="button is-info is-uppercase">Edit</a>
-        <a href="{% url 'logout' %}" class="button is-danger is-uppercase">Log out</a> {% endcomment %}
+        {% comment %} <a href="{% url 'edit_vendor' %}" class="button is-info is-uppercase">Edit</a> {% endcomment %}
+        {% comment %} <a href="{% url 'vendor/vendor-logout' %}" class="button is-danger is-uppercase">Log out</a>  {% endcomment %}
     </div>
 
-    {% comment %} <div class="box">
+    <div class="box">
         <h2 class="is-size-3 mb-4">My products</h2>
 
-        <a href="{% url 'add_product' %}" class="button is-dark is-uppercase mb-6">Add product</a>
+        {% comment %} <a href="{% url 'add_product' %}" class="button is-dark is-uppercase mb-6">Add product</a> {% endcomment %}
 
         {% if products %}
             <table class="table is-fullwidth">
@@ -32,7 +32,9 @@
                 <tbody>
                     {% for product in products %}
                         <tr>
-                            <td><a href="{% url 'product' product.category.slug product.slug %}">{{ product.title }}</a></td>
+                            {% comment %} <td><a href="{% url 'product' product.category.slug product.slug %}">{{ product.title }}</a></td> {% endcomment %}
+                            <td>{{ product.title }}</a></td>
+
                             <td>${{ product.price }}</td>
                         </tr>
                     {% endfor %}
@@ -41,7 +43,7 @@
         {% else %}
             <p>You don't have any products yet...</p>
         {% endif %}
-    </div> {% endcomment %}
+    </div> 
 
     <div class="box">
         <h2 class="is-size-3 mb-4">My orders</h2>

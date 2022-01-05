@@ -1,19 +1,17 @@
-{% extends 'vendor/vendor-base.html' %}
+{% extends "vendor-base/base.html "%}
   {% block content %}   `
      <div class ="content-section">
          <form method="POST">
             {% comment %} #for security :- to ensure that other pages POST data doesnt come {% endcomment %}
              {%csrf_token %}  
              <fieldset class ="form-group">
-                 <legend class ="border-bottom mb-4">Register as Vendor !</legend>
+                 <legend class ="border-bottom mb-4">Login  as Vendor !</legend>
                  {{form.as_p }}                 
              </fieldset>
              <div class ="form-group">
-                 <button class="btn btn-outline-info" type="submit">Register</button>
+                 <button class="btn btn-outline-info" type="submit">Login </button>
              </div>
          </form>
-
-         <a href="{% url 'vendor:vendor_login'%}">Already have an account? Login as Vendor<a>
          
      </div>
   {% endblock content%}    
