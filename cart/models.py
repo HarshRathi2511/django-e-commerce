@@ -21,7 +21,10 @@ class OrderItem(models.Model):  # link between the product and the order
         return self.quantity*self.item.price 
 
     def get_product_slug(self):
-        return self.item.slug       
+        return self.item.slug 
+
+    def get_order_item_vendor(self):
+        return self.item.created_by         
 
     def get_review_url(self):
         return reversed('write-review',args=[self.item.slug])    

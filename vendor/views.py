@@ -71,21 +71,19 @@ def vendor_profile(request):
     vendor = request.user.vendor
     #get the products of the vendor
     products= vendor.products.all()
-    
-
-    order_list = list()
+  
+  # get the order items of the vendor 
     for product in products:
         print('@@@@@@@@@)')
-        print(product.order_item)
+        order_item = product.order_item
+        
+         
 
-        order_list.append(product.order_item)
-
-    print('############3') 
-    print(order_list)
+    # print(order_list)
     context={
         'vendor':vendor,
         'products':products,
-        'orders':order_list
+        # 'orders':order_list
     }
     
     return render(request,'vendor/profile.html',context)   
