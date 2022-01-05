@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 from django import forms
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import fields
 
-from user.models import Address, Profile
+from user.models import Address, Profile, Review
 
 
 class CustomUserCreationForm(forms.Form):
@@ -50,3 +51,9 @@ class ProfileUpdateForm(forms.ModelForm)  :
     class Meta:
         model= Profile 
         fields=['balance']  
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model =Review
+        fields=['description']

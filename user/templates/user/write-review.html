@@ -1,0 +1,22 @@
+{% extends "store/base.html "%}
+
+{% block title %}Write Review  {% endblock %}
+
+{% block content %}
+    <h1 class="title">Review</h1>
+{% comment %} multipart form data as we have files also {% endcomment %}
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-dark is-uppercase">
+                    Submit
+                </button>
+            </div>
+        </div>
+
+    </form>
+{% endblock %}

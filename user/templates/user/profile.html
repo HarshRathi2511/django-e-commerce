@@ -15,9 +15,14 @@
    <div>
      <h6 class="my-0"> {{order_qs.ordered_date}} </h6>
    </div>
-
+     
    <small class="text-muted">{{order_qs.get_num_of_cart_items}}</small>
    <span class="text-muted">{{order_qs.get_total_price_of_cart}}</span>
+
+     {% for order_item in order_qs.return_order_items %}
+     <a href = "{% url 'write-review' order_item.get_product_slug%}">Write Review</a>
+     <small class="text-muted">quantity{{order_item.quantity}}</small>
+     {% endfor %}
 
  </li>
 

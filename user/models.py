@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+from cart.models import Order, OrderItem
+from store.models import Product
+
 #Create the address model here 
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -32,4 +35,12 @@ class Profile(models.Model):
       return f'{self.user.username}\'s Profile'
 
 
+class Review(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='review')
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='review')
+    order_item = models.ForeignKey(OrderItem,on_delete=models.CASCADE,related_name='reviews')
+    description= models.TextField(blank=True)
+    
 
+    def __str__(self):
+        return f"Review by {self.user} "

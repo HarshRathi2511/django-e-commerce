@@ -45,6 +45,10 @@ urlpatterns = [
 
     #path for vendors 
     path('vendor/',include('vendor.urls',namespace='vendor')),
+
+
+    #reviews 
+    path('write-review/<slug:slug>',user_views.write_review,name='write-review')
 ]
 
 

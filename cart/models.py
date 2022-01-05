@@ -18,7 +18,13 @@ class OrderItem(models.Model):  # link between the product and the order
         return f"{self.quantity} :- {self.item.title}"
 
     def get_price_of_product(self):
-        return self.quantity*self.item.price    
+        return self.quantity*self.item.price 
+
+    def get_product_slug(self):
+        return self.item.slug       
+
+    def get_review_url(self):
+        return reversed('write-review',args=[self.item.slug])    
  
 
 # final cart
@@ -31,6 +37,9 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order by :-{self.user.email}"
+        
+    def return_order_items(self):
+        return self.items.all()
 
     def get_num_of_cart_items(self):
         return self.items.all().count()    

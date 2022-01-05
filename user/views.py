@@ -1,11 +1,13 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import fields
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from cart.models import Order
+from cart.models import Order, OrderItem
+from store.models import Product
 from user.models import Address
-from .forms import CustomUserCreationForm, ProfileUpdateForm
+from .forms import CustomUserCreationForm, ProfileUpdateForm, ReviewForm
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -81,4 +83,26 @@ class UpdateUserAddress(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
         form.instance.user =self.request.user
         return super().form_valid(form)    
     
-    
+
+@login_required
+def write_review(request,slug):
+    if request.method=='POST':
+        form = ReviewForm(request.POST)
+
+        if form.is_valid():
+            #not yet put the changes to the database ,otherwise crash
+            review= form.save(commit=False )
+            #add the user 
+            review.user= request.user
+            #add the product
+            product= get_object_or_404(Product,slug=slug)
+            review.product= product
+            #add the order_item 
+            order_item= get_object_or_404(OrderItem,item= product)
+            review.order_item = order_item
+            review.save()
+            messages.info(request,'Your review has been added successfully')
+            return redirect('profile')
+    else:
+        form =ReviewForm()        
+    return render(request,'user/write-review.html',{'form':form})    
