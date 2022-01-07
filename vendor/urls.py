@@ -16,5 +16,6 @@ urlpatterns = [
     #creating products
     path('add-product',views.add_product,name='add-product'),
     path('delete-product/<slug:slug>',views.delete_product,name='delete-product'),
+    path('update-product/<slug:slug>',views.update_product,name='update-product')
 
 ]

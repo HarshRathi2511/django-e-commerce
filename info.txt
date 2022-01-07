@@ -101,3 +101,38 @@ you could use current_user.maps.all() to get all instances of your Map model
 that have a relation to current_user.
 
 The Django documentation has more details.
+
+
+ON DELETE ARGUMEMT
+
+1. CASCADE
+When the on_delete argument is set to cascade then deleting the referenced object will have 
+substantial effect on the referred objects. This means when the referenced object is deleted 
+from the database then all the entries of the object will also be deleted from the 
+entire database. This is how the CASCADE option works in the background. So, there are some 
+impacts on data integrity as far as the CASCADE options is concerned.
+
+2. PROTECT
+PROTECT is the direct opposite of cascade option, here if there is impact on the actual object 
+then all instances of the data on the referenced object are not deleted. So, no deletion happens.
+ This makes the data to be protected before delete processing on the referenced object.
+
+3. RESTRICT
+The RESTRICT is very similar to the PROTECT option, it does the same job just as like the 
+deletion option. The only difference here is when deletion is targeted on the referenced 
+object then the ON_DELETE will raise an error called the RestrictedError. But the RESTRICT 
+will allow deletion to happen when the referencing object and the object which is referenced 
+object is allotted with a reference to a different common object then the deletion is allowed
+to takes place.
+
+4. SET_NULL
+The option functions in the same way the name suggests, when a deletion happens to the referenced
+ object then the value of the referencing object will be updated as NULL. So a NULL value will be 
+ placed for the referencing object. This is how the SET NULL will operate basically.
+
+5. SET_DEFAULT
+The option functions in the same way the name suggests, when a deletion happens to the referenced 
+object then the value of the referencing object will be updated with a default value which it is 
+allotted for, so all instances of the referencing object will be allotted with this default 
+value. So a default value will be placed for the referencing object. This is how the SET DEFAULT 
+will operate basically.

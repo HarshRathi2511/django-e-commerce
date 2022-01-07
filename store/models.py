@@ -30,6 +30,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=250)
     in_stock= models.BooleanField(default=True)
     created_date_time = models.DateTimeField(auto_now_add=True)
+    stock= models.PositiveIntegerField(default=1)
   
 
     class Meta:
@@ -52,3 +53,6 @@ class Product(models.Model):
         
     def get_delete_product_url(self):
         return reverse('vendor:delete-product',args=[self.slug])    
+
+    def decrease_stock(self):
+        return self.stock-1    

@@ -1,22 +1,13 @@
 from django.shortcuts import render
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import request
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils import timezone
-from django.views.generic.base import View
-from django.views.generic.edit import UpdateView
-from cart.models import OrderItem, Order
-from user.models import Address
 from store.models import Product
 from .models import Vendor
-from django.views.generic import DetailView,CreateView
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login 
 from .forms import ProductForm
-
 from django.utils.text import slugify
 
 
@@ -39,6 +30,23 @@ def add_product(request):
     else:
         form =ProductForm()        
     return render(request,'vendor/add_product.html',{'form':form})
+
+@login_required
+def update_product(request,slug):    
+    product = get_object_or_404(Product,slug=slug)
+    if request.method=='POST':
+       form = ProductForm(request.POST,instance=product)
+
+       if form.is_valid():
+           form.save()
+           messages.info(request,'Your product has been updated successfully')
+           return redirect('vendor:vendor-profile')
+    
+    else:
+        form =ProductForm(instance=product)
+    return render(request,'vendor/update-product.html',{'form':form})    
+
+    
 
 @login_required
 def delete_product(request,slug):
