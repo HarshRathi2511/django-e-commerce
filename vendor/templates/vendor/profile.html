@@ -62,17 +62,18 @@
                         </div>
     
                         <div class="column is-12">
-                           {% comment %} <br> <b>Name:</b> {{ order.user.email}} <br>
-                            <b>Address:</b> {{ order.address }}<br>
-                            <b>Zip and place:</b> {{ order.zipcode }} {{ order.place }}<br>
+                            {% comment %} <br> <b>Name:</b> {{ order.user.email}} <br>
+                            <b>Address:</b> {{ order.user.address.apartment }}<br>
+                            <b>Zip and place:</b> {{ order.user.zipcode }} {{ order.user.place }}<br>
                             <b>E-mail:</b> {{ order.email }}<br>
-                            <b>Phone:</b> {{ order.phone }} {% endcomment %}
+                            <b>Phone:</b> {{ order.phone }}
+                             {% endcomment %}
                             
-                            
-
+                            <h5>--->Ordered by {{order.user.email}}</h5>
                             <table class="table is-fullwidth mt-4">
                                 <thead>
                                     <tr>
+
                                         <th>Title -</th>
                                         <th>Price</th>
                                         <th>Quantity</th>                               
@@ -81,16 +82,14 @@
                                 </thead>
     
                                 <tbody>
-                                    {% comment %} {% for item in order.items.all %}
-                                        {% if item.vendor == request.user.vendor %}
+                                  
                                             <tr>
-                                                <td>{{ item.product.title }}</td>
-                                                <td>${{ item.product.price }}</td>
-                                                <td>{{ item.quantity }}</td>
-                                                <td>${{ item.get_total_price }}</td>
+                                                <td>{{ order.item.title }}</td>
+                                                <td>${{ order.item.price }}</td>
+                                                <td>{{ order.quantity }}</td>
+                                                <td>${{ order.get_price_of_product }}</td>
                                             </tr>
-                                        {% endif %}
-                                    {% endfor %} {% endcomment %}
+                                      
                                 </tbody>
                             </table>
                         </div>

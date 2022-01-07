@@ -136,3 +136,11 @@ object then the value of the referencing object will be updated with a default v
 allotted for, so all instances of the referencing object will be allotted with this default 
 value. So a default value will be placed for the referencing object. This is how the SET DEFAULT 
 will operate basically.
+
+
+
+THINGS LEFT IN THE PROJECT 
+:- O AUTH 
+:- SHOWING ORDERS IN THE VENDOR PROFILE SCREEN 
+:- BALANCE OF PAYMENTS 
+:- ADDING THE BALANCE AND THE USER ADDRESS IN THE CUSTOM USER MODEL 

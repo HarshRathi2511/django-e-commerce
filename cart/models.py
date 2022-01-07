@@ -12,7 +12,7 @@ class OrderItem(models.Model):  # link between the product and the order
     quantity = models.PositiveIntegerField(default=1)
     user= models.ForeignKey(User,on_delete=models.CASCADE)
     ordered= models.BooleanField(default=False)
-    # vendor = models.ForeignKey(Vendor, related_name='items', on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, related_name='items', on_delete=models.CASCADE,blank=True,null=True)
 
     def __str__(self):
         return f"{self.quantity} :- {self.item.title}"
