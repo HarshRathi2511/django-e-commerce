@@ -34,7 +34,11 @@ urlpatterns = [
     path('vendor/',include('vendor.urls',namespace='vendor')),
 
     #reviews 
-    path('write-review/<slug:slug>',user_views.write_review,name='write-review')
+    path('write-review/<slug:slug>',user_views.write_review,name='write-review'),
+
+    #add balance to profile
+    path('add-balance',user_views.add_balance,name='add-balance'),
+    path('update-balance',user_views.update_balance,name='update-balance')
 ]
 
 

@@ -7,38 +7,22 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from cart.models import Order, OrderItem
 from store.models import Product
-from user.models import Address
+from user.models import Address, Profile
 from .forms import CustomUserCreationForm, ProfileForm, ReviewForm
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
-# def profile(request):
-#   # when a profile returns data from the post request then it is accesed in the same view using the request.Methof
-#      if request.method == 'POST':  #what to run after the information is posted and we passed in the new data 
-#       #  instances to know what profiles to update 
-#       # request.FILES gets the file data from the user 
-#       # request.POST is the post data the user updates 
-#           p_form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
-#           # populate the forms with the data collected from the user 
-#           if p_form.is_valid():        
-#             p_form.save()
-#             messages.success(
-#               request, f'Your profile has been updated ')
-#           # redirect them to the profile page after creating the account
-#             return redirect('profile')
-#      else: 
-#            p_form = ProfileUpdateForm(instance=request.user.profile)
-
-#      context = {
-#       'p_form':p_form,
-#      }
-#      return render(request,'user/profile.html',context) 
+ 
 
 def profile(request):
     orders_by_user= Order.objects.filter(user=request.user,ordered=True)
+    profile = Profile.objects.filter(user=request.user)
+    
     context={
-        'total_orders':orders_by_user
+        'total_orders':orders_by_user,
+        'profile':profile,
+        
     }
     return render(request,'user/profile.html',context)
 
@@ -109,7 +93,7 @@ def write_review(request,slug):
     return render(request,'user/write-review.html',{'form':form})    
 
 @login_required
-def make_profile(request):
+def add_balance(request):
     if request.method=='POST':
         form = ProfileForm(request.POST)
 
@@ -119,8 +103,30 @@ def make_profile(request):
             money_added= form.cleaned_data['balance']
             messages.info(request,f"Added {money_added} dollars to your account !!")
             profile.save()
+            return redirect('profile')
     
     else:
-        form: ProfileForm()
+        form=ProfileForm()
+
+    return render(request,'user/balance.html',{'form':form})  
+
+
+@login_required
+def update_balance(request):
+    profile = get_object_or_404(Profile,user=request.user)
+    if request.method=='POST':
+        form= ProfileForm(request.POST,instance=profile)  
+        if form.is_valid():
+            form.save()
+            messages.info(request,'Your balance has been updated')
+            return redirect('profile')
+
+    else:
+        form=ProfileForm(instance=profile)
+    return render(request,'user/update-balance.html',{'form':form})      
+
+    
+
+
 
 

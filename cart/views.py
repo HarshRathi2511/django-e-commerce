@@ -34,8 +34,9 @@ def add_to_cart(request, slug):
     # get the product and create the order item
     product = get_object_or_404(Product, slug=slug)
     # do not create new order item if it already in cart
+    vendor = product.created_by
     order_item, created = OrderItem.objects.get_or_create(
-        item=product, user=request.user, ordered=False)
+        item=product, user=request.user, ordered=False,vendor=vendor)
     # check if the user is the logged in user and were only getting orders thats not completed
     # as a user can have many orders
     order_query_set = Order.objects.filter(
@@ -71,6 +72,7 @@ def add_to_cart(request, slug):
 @login_required
 def remove_from_cart(self, slug):
     item = get_object_or_404(Product, slug=slug)
+    vendor = item.created_by
     order_qs = Order.objects.filter(
         user=request.user,
         ordered=False
@@ -82,7 +84,8 @@ def remove_from_cart(self, slug):
                 order_item = OrderItem.objects.filter(
                     item=item,
                     user=request.user,
-                    ordered=False
+                    ordered=False,
+                    vendor=vendor
                 )[0]
                 order.items.remove(order_item)
                 order_item.delete()
@@ -102,6 +105,7 @@ def remove_from_cart(self, slug):
 @login_required
 def remove_single_item_from_cart(request, slug):
     item = get_object_or_404(Product, slug=slug)
+    vendor=item.created_by
     order_qs = Order.objects.filter(
         user=request.user,
         ordered=False
@@ -113,7 +117,8 @@ def remove_single_item_from_cart(request, slug):
             order_item = OrderItem.objects.filter(
                 item=item,
                 user=request.user,
-                ordered=False
+                ordered=False,
+                vendor=vendor
             )[0]
             if order_item.quantity > 1:
                 order_item.quantity -= 1
@@ -134,9 +139,10 @@ def remove_single_item_from_cart(request, slug):
 def add_single_item_to_cart(request, slug):
     # get the product and create the order item
     product = get_object_or_404(Product, slug=slug)
+    vendor=product.created_by
     # do not create new order item if it already in cart
     order_item, created = OrderItem.objects.get_or_create(
-        item=product, user=request.user, ordered=False)
+        item=product, user=request.user, ordered=False,vendor=vendor)
     # check if the user is the logged in user and were only getting orders thats not completed
     # as a user can have many orders
     order_query_set = Order.objects.filter(
@@ -179,6 +185,14 @@ def final_checkout(request):
         # for order_item in order_qs.objects.all():           
         #     order_item.update(ordered=True)
         order_qs.update(ordered=True)
+        # order= order_qs[0]
+        #decrease the stock when order placed 
+        # for order_item in order:
+        #     product= order_item.get_product()
+        #     quantity= order_item.quantity
+        #     product.decrease_stock(quantity)
+
+
         messages.info(request,'Your order has been placed !')  
     else:
         messages.info(request,'Something went wrong !')      

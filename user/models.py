@@ -32,7 +32,13 @@ class Profile(models.Model):
     balance = models.DecimalField(decimal_places=2,default=200,max_digits=5)
 
     def __str__(self) :
-      return f'{self.user.username}\'s Profile'
+      return f'${self.balance}'
+
+    def get_balance(self):
+        return self.balance  
+
+    def update_balance(self,amount):
+        self.balance = self.balance- amount         
 
 
 class Review(models.Model):

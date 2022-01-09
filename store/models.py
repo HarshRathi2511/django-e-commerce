@@ -54,6 +54,6 @@ class Product(models.Model):
     def get_delete_product_url(self):
         return reverse('vendor:delete-product',args=[self.slug])    
 
-    def decrease_stock(self):
-        self.stock= self.stock-1
+    def decrease_stock(self,quantity):
+        self.stock= self.stock-quantity
         

@@ -6,6 +6,9 @@
       <div class="media-body">
          <h5 class="account-heading">{{user.username}}</h5>
          <p class="text-secondary">{{user.email}}</p>
+         <h5 class="account-heading">{{profile}}</h5>
+         <a href = "{% url 'add-balance'%}">Add balance</a>
+         <a href = "{% url 'update-balance' %}">Update Balance</a>
       </div>
    </div>
 

@@ -27,7 +27,10 @@ class OrderItem(models.Model):  # link between the product and the order
         return self.item.created_by         
 
     def get_review_url(self):
-        return reversed('write-review',args=[self.item.slug])    
+        return reversed('write-review',args=[self.item.slug])   
+        
+    def get_product(self):
+        return self.item    
  
 
 # final cart
