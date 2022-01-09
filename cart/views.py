@@ -6,7 +6,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.generic.base import View
 from cart.models import OrderItem, Order
-from user.models import Address
+from user.models import Address, Profile
+from user.views import profile
 from .models import Category, Product
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
@@ -174,16 +175,25 @@ def add_single_item_to_cart(request, slug):
         return redirect("cart:order-summary")
 
 
-
+#change the balance and the stock quantity
 #final checkout and set the order 
 def final_checkout(request):
     order_qs = Order.objects.filter(
         user=request.user,
         ordered=False
     )
+    #amount spend by the user 
+    
+
     if order_qs.exists():
-        # for order_item in order_qs.objects.all():           
-        #     order_item.update(ordered=True)
+        #reduce balance of user 
+        amount_spend= order_qs[0].get_total_price_of_cart()
+        print('#############')
+        print(amount_spend)
+        profile_user= get_object_or_404(Profile,user=request.user)
+        profile_user.balance-=amount_spend
+        # profile_user.update_balance(amount_spend)
+
         order_qs.update(ordered=True)
         # order= order_qs[0]
         #decrease the stock when order placed 
@@ -192,8 +202,8 @@ def final_checkout(request):
         #     quantity= order_item.quantity
         #     product.decrease_stock(quantity)
 
-
-        messages.info(request,'Your order has been placed !')  
+       
+        messages.info(request,'Your order has been placed and balance has been updated !')  
     else:
         messages.info(request,'Something went wrong !')      
 

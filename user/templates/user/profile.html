@@ -6,9 +6,14 @@
       <div class="media-body">
          <h5 class="account-heading">{{user.username}}</h5>
          <p class="text-secondary">{{user.email}}</p>
-         <h5 class="account-heading">{{profile}}</h5>
-         <a href = "{% url 'add-balance'%}">Add balance</a>
+         <h5 class="account-heading">${{profile.balance}}</h5>
+         {% if profile%}
          <a href = "{% url 'update-balance' %}">Update Balance</a>
+         {% else%}
+         <a href = "{% url 'add-balance'%}">Add balance</a>
+         {% endif %}
+       
+        
       </div>
    </div>
 

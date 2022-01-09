@@ -38,7 +38,11 @@ class Profile(models.Model):
         return self.balance  
 
     def update_balance(self,amount):
-        self.balance = self.balance- amount         
+        print(amount)
+        self.balance = self.balance- amount  
+        print('----------------------')
+        print(self.balance)
+              
 
 
 class Review(models.Model):
