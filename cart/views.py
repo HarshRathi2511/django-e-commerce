@@ -178,21 +178,22 @@ def add_single_item_to_cart(request, slug):
 #change the balance and the stock quantity
 #final checkout and set the order 
 def final_checkout(request):
+    profile= get_object_or_404(Profile,user=request.user)
+    profile.update_balance(100)
+    print('#################')
     order_qs = Order.objects.filter(
         user=request.user,
         ordered=False
     )
     #amount spend by the user 
-    
-
     if order_qs.exists():
         #reduce balance of user 
         amount_spend= order_qs[0].get_total_price_of_cart()
         print('#############')
         print(amount_spend)
         profile_user= get_object_or_404(Profile,user=request.user)
-        profile_user.balance-=amount_spend
-        # profile_user.update_balance(amount_spend)
+        
+        profile_user.update_balance(amount_spend)
 
         order_qs.update(ordered=True)
         # order= order_qs[0]
@@ -200,9 +201,7 @@ def final_checkout(request):
         # for order_item in order:
         #     product= order_item.get_product()
         #     quantity= order_item.quantity
-        #     product.decrease_stock(quantity)
-
-       
+        #     product.decrease_stock(quantity)      
         messages.info(request,'Your order has been placed and balance has been updated !')  
     else:
         messages.info(request,'Something went wrong !')      

@@ -45,7 +45,7 @@ class Order(models.Model):
         return f"Order by :-{self.user.email}"
         
     def return_order_items(self):
-        return self.items.all()
+        return self.items.all()  
 
     def get_num_of_cart_items(self):
         return self.items.all().count()    

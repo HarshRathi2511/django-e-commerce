@@ -86,7 +86,7 @@ def vendor_profile(request):
 
    # get the order items of the vendor
     order_list = OrderItem.objects.filter(vendor=vendor)
-
+    
     # print(order_list)
     context = {
         'vendor': vendor,
