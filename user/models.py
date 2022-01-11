@@ -26,14 +26,14 @@ class Address(models.Model):
     class Meta:
         verbose_name_plural = 'Addresses'
 
-class Customer(models.Model):
-    user= models.OneToOneField(User,related_name='customer',on_delete=models.CASCADE)
-    name = models.CharField(max_length=150)
-    username = models.CharField(max_length=150,default='user1')
-    address= models.OneToOneField(Address,related_name='customer',on_delete=models.SET_NULL)
+# class Customer(models.Model):
+#     user= models.OneToOneField(User,related_name='customer',on_delete=models.CASCADE)
+#     name = models.CharField(max_length=150)
+#     username = models.CharField(max_length=150,default='user1')
+#     address= models.OneToOneField(Address,related_name='customer',on_delete=models.SET_NULL)
 
-    def __str__(self):
-        return self.user.username
+#     def __str__(self):
+#         return self.user.username
 
 
 # Create the profile model here 
