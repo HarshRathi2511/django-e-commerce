@@ -69,8 +69,8 @@
                             <b>Phone:</b> {{ order.phone }}
                              {% endcomment %}
                             
-                            <h5>--->Ordered by {{order.user.email}}</h5>
-                            <h5>--->Shipping to {{order.user.address.apartment}},{{order.user.address.street}},{{order.user.address.city}}</h5>
+                            <h5>--->Ordered by {{order.user.user_detail.user}} ({{order.user.user_detail.mobile}})</h5>
+                            <h5>--->Shipping to {{order.user.user_detail.address}},{{order.user.user_detail.locality}},{{order.user.user_detail.landmark}},{{order.user.user_detail.city}},{{order.user.user_detail.pincode}}</h5>
                             <table class="table is-fullwidth mt-4">
                                 <thead>
                                     <tr>

@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import request
 from django.shortcuts import render
@@ -9,7 +11,7 @@ from cart.models import OrderItem, Order
 from user.models import Profile, UserDetail
 from .models import Product, WishlistItem
 from django.views.generic import DetailView
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
@@ -173,9 +175,17 @@ def add_single_item_to_cart(request, slug):
         messages.info(request, "Item added to cart")
         return redirect("cart:order-summary")
 
+def isAddress(user):
+     user_detail= get_object_or_404(UserDetail,user=user)
+     if user_detail.address:
+         return True
+     else:
+         return False    
 
 #change the balance and the stock quantity
 #final checkout and set the order 
+@user_passes_test(isAddress)
+@login_required
 def final_checkout(request):
     order_qs = Order.objects.filter(
         user=request.user,
