@@ -5,6 +5,16 @@ from django.shortcuts import get_object_or_404, render
 
 from vendor.models import Vendor
 
+class WishlistItem(models.Model):
+    item = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='wishlist')
+    user= models.ForeignKey(User,on_delete=models.CASCADE) #one user can have many wishlists
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE,blank=True,null=True)
+    isWishlisted= models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"Wishlist {self.item}"
+
+
 # whenever add to cart pressed product becomes an OrderItem
 class OrderItem(models.Model):  # link between the product and the order
     item = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='order_item')

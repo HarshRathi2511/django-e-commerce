@@ -8,7 +8,7 @@ from django.views.generic.base import View
 from cart.models import OrderItem, Order
 from user.models import Address, Profile
 from user.views import profile
-from .models import Category, Product
+from .models import Category, Product, WishlistItem
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -206,4 +206,28 @@ def final_checkout(request):
     else:
         messages.info(request,'Something went wrong !')      
 
-    return redirect('store:home_products')        
+    return redirect('store:home_products')    
+
+
+
+#WISHLIST FUNCTIONS 
+def wishlist(request):
+    wishlist_items =WishlistItem.objects.filter(user=request.user)
+    context= {'items': wishlist_items}
+    return render(request,'cart/wishlist.html',context)
+
+
+def add_to_wishlist(request,slug):
+    product= get_object_or_404(Product,slug=slug)
+    vendor = product.created_by
+    WishlistItem.objects.create(item=product,user=request.user,vendor=vendor)
+    messages.info(request,'Item put in wishlist !')
+    return redirect('store:home_products') 
+
+def remove_from_wishlist(request,slug):
+    product= get_object_or_404(Product,slug=slug)
+    vendor = product.created_by
+    WishlistItem.objects.filter(item=product,user=request.user,vendor=vendor).delete()
+    messages.info(request,'Item removed from wishlist !')
+    return redirect('cart:wishlist') 
+
