@@ -6,9 +6,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.generic.base import View
 from cart.models import OrderItem, Order
-from user.models import Address, Profile
-from user.views import profile
-from .models import Category, Product, WishlistItem
+from user.models import Profile, UserDetail
+from .models import Product, WishlistItem
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,8 +19,8 @@ class OrderSummaryView(LoginRequiredMixin,View):
         #add checks 
         try:
             orders = Order.objects.get(user=self.request.user,ordered=False)
-            address = Address.objects.filter(user=self.request.user)[0]
-            context={'orders':orders,'address':address}
+            user_detail=get_object_or_404(UserDetail,user=self.request.user)
+            context={'orders':orders,'user_detail':user_detail}
             return render(self.request,'cart/order_summary.html',context)
         except ObjectDoesNotExist:
             messages.info(self.request,"You do not have any active items in the cart")
@@ -178,30 +177,13 @@ def add_single_item_to_cart(request, slug):
 #change the balance and the stock quantity
 #final checkout and set the order 
 def final_checkout(request):
-    profile= get_object_or_404(Profile,user=request.user)
-    profile.update_balance(100)
-    print('#################')
     order_qs = Order.objects.filter(
         user=request.user,
         ordered=False
     )
     #amount spend by the user 
-    if order_qs.exists():
-        #reduce balance of user 
-        amount_spend= order_qs[0].get_total_price_of_cart()
-        print('#############')
-        print(amount_spend)
-        profile_user= get_object_or_404(Profile,user=request.user)
-        
-        profile_user.update_balance(amount_spend)
-
-        order_qs.update(ordered=True)
-        # order= order_qs[0]
-        #decrease the stock when order placed 
-        # for order_item in order:
-        #     product= order_item.get_product()
-        #     quantity= order_item.quantity
-        #     product.decrease_stock(quantity)      
+    if order_qs.exists():       
+        order_qs.update(ordered=True)     
         messages.info(request,'Your order has been placed and balance has been updated !')  
     else:
         messages.info(request,'Something went wrong !')      

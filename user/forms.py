@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import fields
 
-from user.models import Address, Profile, Review
+from user.models import  Profile, Review, UserDetail
 
 
 class CustomUserCreationForm(forms.Form):
@@ -59,3 +59,28 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model =Review
         fields=['description']
+
+class UserAddressForm(forms.ModelForm):
+	# address = forms.CharField(widget=forms.TextInput(attrs={}))
+	# locality = forms.CharField(required =True)
+	# city = forms.CharField(required =True)
+	# alternate_mobile = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Alternate Mobile No(optional)'}), required = False)
+	# landmark = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Landmark(optional)'}), required = False)
+	class Meta:
+		model = UserDetail
+		fields = [		
+			'address',
+			'pincode',
+			'landmark',
+			'locality',
+			'city',
+			'state',
+		]        
+
+class UpdateUserDetailForm(forms.ModelForm):
+	class Meta:
+		model = UserDetail
+		fields = [
+			'dob',
+			'mobile',
+		]        

@@ -1,39 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
-
+from PIL import Image
 from cart.models import Order, OrderItem
 from store.models import Product
-
-#Create the address model here 
-
-class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='address')
-    apartment = models.CharField(max_length=100)
-    street = models.CharField(max_length=100)
-    city=models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
-    pin = models.PositiveIntegerField()
-    # default = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.user.username
-    
-    def get_absolute_update_url(self):
-        return reverse("update-address", kwargs={"pk": self.pk})
-    
-
-    class Meta:
-        verbose_name_plural = 'Addresses'
-
-# class Customer(models.Model):
-#     user= models.OneToOneField(User,related_name='customer',on_delete=models.CASCADE)
-#     name = models.CharField(max_length=150)
-#     username = models.CharField(max_length=150,default='user1')
-#     address= models.OneToOneField(Address,related_name='customer',on_delete=models.SET_NULL)
-
-#     def __str__(self):
-#         return self.user.username
 
 
 # Create the profile model here 
@@ -62,3 +32,17 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review by {self.user} "
+
+
+class UserDetail(models.Model):	
+	user = models.OneToOneField(User, on_delete=models.CASCADE,primary_key=True,related_name='user_detail')
+	dob = models.DateField(null = True)
+	mobile = models.CharField(max_length=10,null=True,)
+	address = models.TextField()
+	pincode = models.CharField(max_length=6, null=True)
+	landmark = models.CharField(max_length=500, null=True, blank=True)
+	locality = models.CharField(max_length=100, null=True, blank=True)
+	city = models.CharField(max_length=100, null=True, blank=True)
+	state = models.CharField(max_length=50, null=True)
+  
+        
