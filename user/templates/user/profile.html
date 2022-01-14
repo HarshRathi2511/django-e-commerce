@@ -1,6 +1,6 @@
 {% extends "store/base.html "%}
 {% block content %} `
-<h1>Profile</h1>
+<h1>Profile............Balance :- {{profile_balance.balance}}</h1>
 <div class="content-section">
    <div class="media">
       <div class="media-body">
@@ -9,13 +9,13 @@
 
          {{form.as_p }}
          <a href = "{% url 'update-address'  %}">Update Address</a> 
-         {% comment %} <h5 class="account-heading">${{user_detail.balance}}</h5> {% endcomment %}
+        
 
-         {% comment %} {% if user_detail%}
+        {% if user_detail%}
          <a href = "{% url 'update-balance' %}">Update Balance</a>
          {% else%}
          <a href = "{% url 'add-balance'%}">Add balance</a>
-         {% endif %} {% endcomment %}
+         {% endif %} 
        
         
       </div>

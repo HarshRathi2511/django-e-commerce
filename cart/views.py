@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.views.generic.base import View
 from cart.models import OrderItem, Order
 from user.models import Profile, UserDetail
+from user.views import profile
 from .models import Product, WishlistItem
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -195,12 +196,19 @@ def final_checkout(request):
     #amount spend by the user 
     if order_qs.exists():       
         order_qs.update(ordered=True)     
-        messages.info(request,'Your order has been placed and balance has been updated !')
-
-         #send mail to the user from the seller 
         print('3########################')
         #get the most recent order 
-        order = Order.objects.order_by('ordered_date').filter(user=request.user,ordered=True).first()
+        order = Order.objects.order_by('ordered_date').filter(user=request.user,ordered=True).last()
+        #update the balance in the users account 
+        total_amount_in_cart= order.get_total_price_of_cart()
+        profile_balance= get_object_or_404(Profile,user=request.user)
+        #check if the user has balance 
+        if profile_balance.balance <= total_amount_in_cart:
+            messages.info(request,'You do not have enough money in the cart !')
+        else:               
+            profile_balance.balance= profile_balance.balance- total_amount_in_cart
+            profile_balance.save(update_fields=['balance'])  # more efficient instead of updating the whole model row 
+            messages.info(request,f'Deducted {total_amount_in_cart} from your balance!')
         #get the order_items in the order set 
         order_list = order.items.all()
         for order_item in order_list:
@@ -208,7 +216,7 @@ def final_checkout(request):
                 #send emails to the vendor 
                 # send_mail('Order placed ', f'Order of {order_item.item.title} and quantity of {order_item.quantity}','f20200794@pilani.bits-pilani.ac.in',[order_item.vendor.created_by.email])
         print('3########################')
-        
+        messages.info(request,'Your order has been placed  !')
 
           
     else:
