@@ -9,7 +9,7 @@ from user.models import  Profile, UserDetail
 from .forms import CustomUserCreationForm, ProfileForm, ReviewForm, UserAddressForm
 
 def profile(request):
-    orders_by_user= Order.objects.filter(user=request.user,ordered=True)
+    orders_by_user= Order.objects.filter(user=request.user,ordered=True).order_by('-ordered_date')
     user_detail = get_object_or_404(UserDetail,user=request.user)
     form = UserAddressForm(instance=user_detail)
     profile_balance= get_object_or_404(Profile,user=request.user)

@@ -32,8 +32,10 @@
    <span class="text-muted">{{order_qs.get_total_price_of_cart}}</span>
 
      {% for order_item in order_qs.return_order_items %}
+     <small class="text-muted">Title:- {{order_item.item.title}}</small>
      <a href = "{% url 'write-review' order_item.get_product_slug%}">Write Review</a>
-     <small class="text-muted">quantity{{order_item.quantity}}</small>
+     <small class="text-muted">Quantity:- {{order_item.quantity}}</small>
+     
      {% endfor %}
 
  </li>

@@ -137,9 +137,9 @@ LOGIN_URL ='login'
 
 # SENDGRID_API_KEY ='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'
 
-# # Twilio SendGrid
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'f20200794@pilani.bits-pilani.ac.in'
-# EMAIL_HOST_PASSWORD = os.environ.get(SENDGRID_API_KEY)
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_EMAIL_FROM = 'Lez-go <noreply@lezgoadmin.com>'
