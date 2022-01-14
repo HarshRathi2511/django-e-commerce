@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <title>Lez Go</title>
+
+        <style type="text/css">
+            html {
+                width: 100%;
+            }
+
+            body {
+                width: 100%;
+                font-family: Arial;
+                font-size: 14px;
+                background-color: #fff;
+                color: #333;
+            }
+        </style>
+    </head>
+
+    <body>
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <td><h1>Order confirmation</h1></td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h3>Details</h3>
+
+                    <b>Name:</b> {{ order.user.first_name }} {{ order.user.last_name }}<br>
+                    <b>Address:</b> {{ order.user.user_detail.address }}<br>
+                    <b>Zip and place:</b> {{ order.user.user_detail.locality }} {{ order.user.user_detail.pincode }}<br>
+                    <b>E-mail:</b> {{ order.user.email }}<br>
+                    <b>Phone:</b> {{ order.user.user_detail.mobile }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h3>Products</h3>
+
+                    <table width="100%" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td><b>Product</b></td>
+                            <td><b>Price</b></td>
+                            <td><b>Quantity</b></td>
+                            <td><b>Total</b></td>
+                        </tr>
+                        
+                        {% for item in order.items.all %}
+                            <tr>
+                                <td>{{ item.item.title }}</td>
+                                <td>${{ item.item.price }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>${{ item.get_price_of_product }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

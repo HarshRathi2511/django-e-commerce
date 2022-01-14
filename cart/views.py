@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.generic.base import View
+from cart.emails import notify_customer, notify_vendor
 from cart.models import OrderItem, Order
 from user.models import Profile, UserDetail
 from user.views import profile
@@ -202,6 +203,7 @@ def final_checkout(request):
         #update the balance in the users account 
         total_amount_in_cart= order.get_total_price_of_cart()
         profile_balance= get_object_or_404(Profile,user=request.user)
+
         #check if the user has balance 
         if profile_balance.balance <= total_amount_in_cart:
             messages.info(request,'You do not have enough money in the cart !')
@@ -209,14 +211,19 @@ def final_checkout(request):
             profile_balance.balance= profile_balance.balance- total_amount_in_cart
             profile_balance.save(update_fields=['balance'])  # more efficient instead of updating the whole model row 
             messages.info(request,f'Deducted {total_amount_in_cart} from your balance!')
+
+
         #get the order_items in the order set 
-        order_list = order.items.all()
-        for order_item in order_list:
-                print(order_item.user)
-                #send emails to the vendor 
-                # send_mail('Order placed ', f'Order of {order_item.item.title} and quantity of {order_item.quantity}','f20200794@pilani.bits-pilani.ac.in',[order_item.vendor.created_by.email])
-        print('3########################')
-        messages.info(request,'Your order has been placed  !')
+        # order_list = order.items.all()
+        # for order_item in order_list:
+        #         print(order_item.user)
+        #         #send emails to the vendor as there are many vendors in an order_query_Set 
+        #         notify_vendor(order_item)
+
+        #finally notify the customer by passing in the latest order 
+        notify_customer(order)        
+        
+        messages.info(request,'Your order has been placed and a confirmation email has been sent !')
 
           
     else:

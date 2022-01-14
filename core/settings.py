@@ -142,4 +142,4 @@ EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = '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'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_EMAIL_FROM = 'Lez-go <noreply@lezgoadmin.com>'
+DEFAULT_EMAIL_FROM = 'f20200794@pilani.bits-pilani.ac.in'
