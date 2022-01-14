@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import request
@@ -10,6 +11,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import ProductForm
 from django.utils.text import slugify
+import csv 
 
 
 @login_required
@@ -95,3 +97,34 @@ def vendor_profile(request):
     }
 
     return render(request, 'vendor/profile.html', context)
+
+@login_required
+def export_orders_csv(request):
+      vendor = request.user.vendor 
+      order_list = list(OrderItem.objects.filter(vendor=vendor))
+      total_revenue =0
+
+      response = HttpResponse(
+        content_type='text/csv', #otherwise expected as an html file 
+        headers={'Content-Disposition': 'attachment; filename="orders.csv"'},
+      )
+    # hook into the CSV-generation API by passing response as the first argument to csv.writer
+      writer = csv.writer(response)
+      #write the header row in csv 
+      writer.writerow(['Title','Price','Quantity','Total','Ordered By','Shipping to'])
+       
+      #populate the csv 
+      for order_item in order_list:
+          #get the user addresses 
+          detail = order_item.user.user_detail
+          user_address = f"{detail.address},{detail.landmark},{detail.locality},{detail.city},{detail.state},{detail.pincode}"
+          #update the total revenue 
+          total_revenue+= order_item.get_price_of_product()
+          writer.writerow([order_item.item.title,order_item.item.price,order_item.quantity,order_item.get_price_of_product(),order_item.user,user_address])
+      
+      writer.writerow([''])
+      writer.writerow(['TOTAL REVENUE',total_revenue])    
+
+      return response
+
+

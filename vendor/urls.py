@@ -2,6 +2,7 @@ from django.contrib import auth
 from django.urls import path
 from .import views 
 from django.contrib.auth import views as auth_views_vendor
+from .views import export_orders_csv
 
 app_name = 'vendor'
 
@@ -16,6 +17,9 @@ urlpatterns = [
     #creating products
     path('add-product',views.add_product,name='add-product'),
     path('delete-product/<slug:slug>',views.delete_product,name='delete-product'),
-    path('update-product/<slug:slug>',views.update_product,name='update-product')
+    path('update-product/<slug:slug>',views.update_product,name='update-product'),
+
+    #csv of orders 
+    path('export-orders-csv/',export_orders_csv,name='export-orders-csv')
 
 ]

@@ -53,7 +53,7 @@
 
     <div class="box">
         <h2 class="is-size-3 mb-4">My orders</h2>
-    
+        <a href="{% url 'vendor:export-orders-csv'%}"><h4 class="is-size-3 mb-4">Generate Csv</h4></a>
         {% if orders %}
             {% for order in orders %}
                     <div class="columns is-multiline">
@@ -62,12 +62,7 @@
                         </div>
     
                         <div class="column is-12">
-                            {% comment %} <br> <b>Name:</b> {{ order.user.email}} <br>
-                            <b>Address:</b> {{ order.user.address.apartment }}<br>
-                            <b>Zip and place:</b> {{ order.user.zipcode }} {{ order.user.place }}<br>
-                            <b>E-mail:</b> {{ order.email }}<br>
-                            <b>Phone:</b> {{ order.phone }}
-                             {% endcomment %}
+                            
                             
                             <h5>--->Ordered by {{order.user.user_detail.user}} ({{order.user.user_detail.mobile}})</h5>
                             <h5>--->Shipping to {{order.user.user_detail.address}},{{order.user.user_detail.locality}},{{order.user.user_detail.landmark}},{{order.user.user_detail.city}},{{order.user.user_detail.pincode}}</h5>
