@@ -120,6 +120,7 @@ def export_orders_csv(request):
           user_address = f"{detail.address},{detail.landmark},{detail.locality},{detail.city},{detail.state},{detail.pincode}"
           #update the total revenue 
           total_revenue+= order_item.get_price_of_product()
+          #populate
           writer.writerow([order_item.item.title,order_item.item.price,order_item.quantity,order_item.get_price_of_product(),order_item.user,user_address])
       
       writer.writerow([''])

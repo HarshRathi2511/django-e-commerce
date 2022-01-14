@@ -13,6 +13,7 @@ from .models import Product, WishlistItem
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -194,7 +195,22 @@ def final_checkout(request):
     #amount spend by the user 
     if order_qs.exists():       
         order_qs.update(ordered=True)     
-        messages.info(request,'Your order has been placed and balance has been updated !')  
+        messages.info(request,'Your order has been placed and balance has been updated !')
+
+         #send mail to the user from the seller 
+        print('3########################')
+        #get the most recent order 
+        order = Order.objects.order_by('ordered_date').filter(user=request.user,ordered=True).first()
+        #get the order_items in the order set 
+        order_list = order.items.all()
+        for order_item in order_list:
+                print(order_item.user)
+                #send emails to the vendor 
+                # send_mail('Order placed ', f'Order of {order_item.item.title} and quantity of {order_item.quantity}','f20200794@pilani.bits-pilani.ac.in',[order_item.vendor.created_by.email])
+        print('3########################')
+        
+
+          
     else:
         messages.info(request,'Something went wrong !')      
 
