@@ -45,7 +45,7 @@ class OrderItem(models.Model):  # link between the product and the order
 
 # final cart
 class Order(models.Model):
-    user= models.ForeignKey(User,on_delete=models.CASCADE)
+    user= models.ForeignKey(User,on_delete=models.CASCADE,related_name='order')
     ordered= models.BooleanField(default=False)
     items= models.ManyToManyField(OrderItem)
     ordered_date= models.DateTimeField()
@@ -58,7 +58,7 @@ class Order(models.Model):
         return self.items.all()  
 
     def get_num_of_cart_items(self):
-        return self.items.all().count()    
+        return self.items.all().count()   
 
     def get_total_price_of_cart(self):
         total_price_cart=0

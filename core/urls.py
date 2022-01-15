@@ -38,7 +38,14 @@ urlpatterns = [
 
     #add balance to profile
     path('add-balance',user_views.add_balance,name='add-balance'),
-    path('update-balance',user_views.update_balance,name='update-balance')
+    path('update-balance',user_views.update_balance,name='update-balance'),
+
+    #oauth urls 
+    path('accounts/',include('allauth.urls')),
+    
+    #login redirect vieews
+    path('login-redirect/',user_views.login_redirect_view,name='login-redirect'),
+    
 ]
 
 

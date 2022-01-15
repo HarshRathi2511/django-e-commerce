@@ -39,10 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'store',
     'vendor',
     'cart',
-    'user',
+    'user',  
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google'
+
 ]
 
 MIDDLEWARE = [
@@ -72,6 +78,16 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
@@ -133,7 +149,7 @@ MEDIA_URL ='/media/'
 MEDIA_ROOT =os.path.join(BASE_DIR,'media/')
 
 #redirecting users after login 
-LOGIN_REDIRECT_URL = 'register-address'  
+LOGIN_REDIRECT_URL = 'login-redirect'  
 LOGIN_URL ='login'
 
 # SENDGRID_API_KEY ='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'
@@ -144,3 +160,26 @@ EMAIL_HOST_PASSWORD = 'SG.NLCR0UUsQvOgkoE4D306XQ.8kHdRy47RfcVjg_M9cOPq6391r63oFO
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_EMAIL_FROM = 'f20200794@pilani.bits-pilani.ac.in'
+
+
+SITE_ID=1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type':'online',
+        },
+        'APP': {
+            'client_id': '795560303955-r2luh63bsf95niqm2iatsbua6homln2c.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
+
+ACCOUNT_FORMS = {'login': 'user.all_auth_forms.MyCustomLoginForm'}
+ACCOUNT_FORMS = {'signup': 'user.all_auth_forms.MyCustomSignupForm'}

@@ -5,9 +5,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import fields
-
 from user.models import  Profile, Review, UserDetail
-
 
 class CustomUserCreationForm(forms.Form):
     username = forms.CharField(label='Enter Username', min_length=4, max_length=150)

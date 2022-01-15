@@ -118,3 +118,10 @@ def update_address(request):
     return render(request,'user/update_user_address.html',{'form':form}) 
 
 
+def login_redirect_view(request):
+    if  UserDetail.objects.filter(user=request.user).exists() and Profile.objects.filter(user=request.user).exists() :
+        return redirect('store:home_products')
+    else: 
+        UserDetail.objects.create(user=request.user)
+        Profile.objects.create(user=request.user)
+        return redirect('store:home_products')   

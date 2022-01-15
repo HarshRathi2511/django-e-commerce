@@ -15,7 +15,7 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">SLIQ GROCERY:DELIVERED IN 10 MINUTES</a>
+                <a class="navbar-brand" href="#">LEZ GO</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -27,7 +27,7 @@
                         </li>
                         <li class="nav-item">
                            
-                            <a class="nav-link" href="{{ address.get_absolute_update_url }}">Update Your Address</a>
+                           
                             
                         </li>
                         <li class="nav-item dropdown">
@@ -55,15 +55,15 @@
                       <a type="button" role="button" href="{% url "cart:order-summary" %}"
                       class="btn btn-outline-secondary">
 
-                      {% comment %} {% with total_qty=basket|length %}
-                          <div id="basket-qty" class="d-inline-flex">
-                              {% if total_qty > 0 %}
-                                  {{ total_qty }}
+                    
+                          {% comment %} <div id="basket-qty" class="d-inline-flex">
+                              {% if user.order.items.length  %}
+                                  {{ user.order.items.length }}
                               {% else %}
-                                  0
+                              0
                               {% endif %}
-                          </div>
-                      {% endwith %}  {% endcomment %}
+                          </div> {% endcomment %}
+                    
 
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                           class="bi bi-cart3" viewBox="0 0 16 16">
@@ -74,13 +74,13 @@
                   </a> 
                       
                     {% else %}
-                      <a class="nav-item nav-link" href="{%url 'login'%}">Login</a>
-                      <a class="nav-item nav-link" href="{%url 'register'%}">Register</a>
+                      <a class="nav-item nav-link" href="{%url 'account_login'%}">Login</a>
+                      <a class="nav-item nav-link" href="{%url 'account_signup'%}">Register</a>
                     {% endif %}  
 
                   
 
-                    {% if request.user.is_authenticated%}
+                    {% if request.user.is_authenticated and user.vendor%}
                     <a class="nav-item nav-link" href="{%url 'vendor:vendor-profile'%}"> Vendor Profile</a>
                     {% else %}
                     <a class="nav-item nav-link" href="{%url 'vendor:become-vendor'%}">Become Vendor</a>
@@ -101,7 +101,7 @@
 {% endif %}
 
 
-<
+
 
     <div id="content">{% block content %} {% endblock %}</div>
 </body>
