@@ -1,3 +1,6 @@
+from fileinput import filename
+from django.http import HttpResponse
+from urllib import response
 from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.models import User
@@ -7,6 +10,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.generic.base import View
+from cart.admin import OrderResource
 from cart.emails import notify_customer, notify_vendor
 from cart.models import OrderItem, Order
 from user.models import Profile, UserDetail
@@ -197,7 +201,7 @@ def final_checkout(request):
     #amount spend by the user 
     if order_qs.exists():       
         order_qs.update(ordered=True)     
-        print('3########################')
+        
         #get the most recent order 
         order = Order.objects.order_by('ordered_date').filter(user=request.user,ordered=True).last()
         #update the balance in the users account 
@@ -253,4 +257,26 @@ def remove_from_wishlist(request,slug):
     WishlistItem.objects.filter(item=product,user=request.user,vendor=vendor).delete()
     messages.info(request,'Item removed from wishlist !')
     return redirect('cart:wishlist') 
+
+
+#exporting importing from the admin locations
+def export_data(request):
+    if request.method == 'POST':
+        # Get selected option from form
+        file_format = request.POST['file-format']
+        order_resource = OrderResource()
+        dataset = order_resource.export()
+        if file_format == 'CSV':
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
+            return response        
+        elif file_format == 'JSON':
+            response = HttpResponse(dataset.json, content_type='application/json')
+            response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
+            return response
+        elif file_format == 'XLS (Excel)':
+            response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="exported_data.xls"'
+            return response   
+    return render(request, 'cart/export_import_data_page.html') 
 

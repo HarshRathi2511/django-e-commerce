@@ -15,4 +15,7 @@ urlpatterns = [
     path('add-to-wishlist/<slug:slug>',views.add_to_wishlist,name= 'add-to-wishlist'), 
     path('wishlist',views.wishlist,name='wishlist'),
     path('remove-from-wishlist/<slug:slug>',views.remove_from_wishlist,name= 'remove-from-wishlist'), 
+
+    #import export 
+    path('export-data/', views.export_data, name="export_data"),
 ]

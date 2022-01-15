@@ -47,8 +47,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
-
+    'allauth.socialaccount.providers.google',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -183,3 +183,9 @@ SOCIALACCOUNT_PROVIDERS = {
 
 ACCOUNT_FORMS = {'login': 'user.all_auth_forms.MyCustomLoginForm'}
 ACCOUNT_FORMS = {'signup': 'user.all_auth_forms.MyCustomSignupForm'}
+
+#import export package 
+IMPORT_EXPORT_USE_TRANSACTIONS = True
+# Controls if resource importing should use database transactions. Defaults to False.
+#  Using transactions makes imports safer as a failure during import won’t import only part 
+# of the data set.
