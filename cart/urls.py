@@ -16,6 +16,10 @@ urlpatterns = [
     path('wishlist',views.wishlist,name='wishlist'),
     path('remove-from-wishlist/<slug:slug>',views.remove_from_wishlist,name= 'remove-from-wishlist'), 
 
-    #import export 
-    path('export-data/', views.export_data, name="export_data"),
+    # #import export 
+    # path('export-data/', views.export_data, name="export_data"),
+
+
+    # #import
+    # path('upload/',views.upload_order,name='upload-order')
 ]

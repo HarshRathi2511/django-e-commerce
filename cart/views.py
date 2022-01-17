@@ -10,7 +10,6 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.generic.base import View
-from cart.admin import OrderResource
 from cart.emails import notify_customer, notify_vendor
 from cart.models import OrderItem, Order
 from user.models import Profile, UserDetail
@@ -20,6 +19,7 @@ from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
+from tablib import Dataset
 # Create your views here.
 
 
@@ -259,24 +259,43 @@ def remove_from_wishlist(request,slug):
     return redirect('cart:wishlist') 
 
 
-#exporting importing from the admin locations
-def export_data(request):
-    if request.method == 'POST':
-        # Get selected option from form
-        file_format = request.POST['file-format']
-        order_resource = OrderResource()
-        dataset = order_resource.export()
-        if file_format == 'CSV':
-            response = HttpResponse(dataset.csv, content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
-            return response        
-        elif file_format == 'JSON':
-            response = HttpResponse(dataset.json, content_type='application/json')
-            response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
-            return response
-        elif file_format == 'XLS (Excel)':
-            response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
-            response['Content-Disposition'] = 'attachment; filename="exported_data.xls"'
-            return response   
-    return render(request, 'cart/export_import_data_page.html') 
+# #exporting importing from the admin locations
+# def export_data(request):
+#     if request.method == 'POST':
+#         # Get selected option from form
+#         file_format = request.POST['file-format']
+#         order_resource = OrderResource()
+#         dataset = order_resource.export()
+#         if file_format == 'CSV':
+#             response = HttpResponse(dataset.csv, content_type='text/csv')
+#             response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
+#             return response        
+#         elif file_format == 'JSON':
+#             response = HttpResponse(dataset.json, content_type='application/json')
+#             response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
+#             return response
+#         elif file_format == 'XLS (Excel)':
+#             response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+#             response['Content-Disposition'] = 'attachment; filename="exported_data.xls"'
+#             return response   
+#     return render(request, 'cart/export_import_data_page.html') 
+
+
+# def upload_order(request):
+#     if request.method=='POST':
+#         order_resource= OrderResource()
+#         dataset= Dataset()
+
+#         new_order= request.FILES['myfile']
+
+
+#         #messages for wrong format excel 
+#         imported_data = dataset.load(new_order.read(),format='xlsx')
+
+#         for data in imported_data:
+#             order = OrderItem(data[0],data[1],data[2],data[3],data[4],data[5])
+#             order.save()
+
+#     return render(request,'cart/import_data.html',)        
+
 
