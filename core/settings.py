@@ -13,16 +13,18 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
+from ..secrets import CLIENT_ID, DJANGO_SECRET_KEY, SECRET, SENDGRID_API_KEY
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8j#u^4f1$b51y&=)$z5!(ml=_&ahi9y&37t6!6-kg=01iakxjj'
+SECRET_KEY = DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -156,7 +158,7 @@ LOGIN_URL ='login'
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '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'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_EMAIL_FROM = 'f20200794@pilani.bits-pilani.ac.in'
@@ -174,8 +176,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type':'online',
         },
         'APP': {
-            'client_id': '795560303955-r2luh63bsf95niqm2iatsbua6homln2c.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': CLIENT_ID,
+            'secret': SECRET,
             'key': ''
         }
     }
