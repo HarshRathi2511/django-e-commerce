@@ -238,12 +238,13 @@ def final_checkout(request):
 
 
 #WISHLIST FUNCTIONS 
+@login_required
 def wishlist(request):
     wishlist_items =WishlistItem.objects.filter(user=request.user)
     context= {'items': wishlist_items}
     return render(request,'cart/wishlist.html',context)
 
-
+@login_required
 def add_to_wishlist(request,slug):
     product= get_object_or_404(Product,slug=slug)
     vendor = product.created_by
@@ -251,6 +252,7 @@ def add_to_wishlist(request,slug):
     messages.info(request,'Item put in wishlist !')
     return redirect('store:home_products') 
 
+@login_required
 def remove_from_wishlist(request,slug):
     product= get_object_or_404(Product,slug=slug)
     vendor = product.created_by
