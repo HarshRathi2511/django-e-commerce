@@ -60,15 +60,16 @@ def delete_product(request, slug):
     return redirect('vendor:vendor-profile')
 
 
-def become_vendor(request):
+def become_vendor(request,backend='django.contrib.auth.backends.ModelBackend'):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
 
         if form.is_valid():
             user = form.save()
+            
 
             # pre built login function
-            login(request, user)
+            login(request, user,backend= 'django.contrib.auth.backends.ModelBackend')
 
             vendor = Vendor.objects.create(
                 shop_name=user.username, created_by=user)
@@ -77,6 +78,13 @@ def become_vendor(request):
     else:
         form = UserCreationForm()
     return render(request, 'vendor/register.html', {'form': form})
+
+# def login_redirect_view(request):
+#     if  Vendor.objects.filter(user=request.user).exists():
+#         return redirect('vendor:vendor-profile')
+#     else: 
+#         Vendor.objects.create(created_by=request.user,shop_name=request.user.username)        
+#         return redirect('vendor:vendor-profile')    
 
 
 @login_required
