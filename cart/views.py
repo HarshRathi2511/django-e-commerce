@@ -12,6 +12,7 @@ from django.utils import timezone
 from django.views.generic.base import View
 from cart.emails import notify_customer, notify_vendor
 from cart.models import OrderItem, Order
+import user
 from user.models import Profile, UserDetail
 from user.views import profile
 from .models import Product, WishlistItem
@@ -182,11 +183,12 @@ def add_single_item_to_cart(request, slug):
         messages.info(request, "Item added to cart")
         return redirect("cart:order-summary")
 
-def isAddress(user):
+def isAddress(request,user):
      user_detail= get_object_or_404(UserDetail,user=user)
      if user_detail.address:
          return True
      else:
+         messages.info(request,'Please add the shipping address by updating your profile')
          return False    
 
 #change the balance and the stock quantity
@@ -198,6 +200,10 @@ def final_checkout(request):
         user=request.user,
         ordered=False
     )
+    user_detail =UserDetail.objects.get(user=request.user)
+    if not user_detail.address:
+        messages.info(request,'Please fill an address')
+
     #amount spend by the user 
     if order_qs.exists():       
         order_qs.update(ordered=True)     
@@ -217,12 +223,14 @@ def final_checkout(request):
             messages.info(request,f'Deducted {total_amount_in_cart} from your balance!')
 
 
-        #get the order_items in the order set 
-        # order_list = order.items.all()
-        # for order_item in order_list:
-        #         print(order_item.user)
-        #         #send emails to the vendor as there are many vendors in an order_query_Set 
-        #         notify_vendor(order_item)
+        # get the order_items in the order set 
+        order_list = order.items.all()
+        for order_item in order_list:
+            #decrease the stock of the product
+            order_item.item.decrease_stock(order_item.quantity)
+                # print(order_item.user)
+                #send emails to the vendor as there are many vendors in an order_query_Set 
+                # notify_vendor(order_item)
 
         #finally notify the customer by passing in the latest order 
         notify_customer(order)        

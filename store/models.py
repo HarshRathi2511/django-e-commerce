@@ -59,4 +59,5 @@ class Product(models.Model):
 
     def decrease_stock(self,quantity):
         self.stock= self.stock-quantity
+        self.save()
         
