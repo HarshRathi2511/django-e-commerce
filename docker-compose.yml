@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+    django:
+        build: . #use the initial python image
+        container_name: django
+        command: python manage.py runserver 0.0.0.0:8000
+        ports:
+            - 8000:8000
+        depends_on:
+            - pgdb  #postgresql database
+    pgdb:
+        image: postgres 
+        container_name: pgdb
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        ports:
+            - 5432:5432    
+        environment:
+            - POSTGRES_DB= test
+            - POSTGRES_USER= postgres
+            - POSTGRES_PASSWORD= WarMachine007      
+volumes:
+    postrgres-data:

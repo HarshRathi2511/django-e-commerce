@@ -1,0 +1,71 @@
+The . simply means "current working directory"
+
+docker build
+In the context of the docker build command, you are using it to signal that the build context 
+for docker build is the current working directory. Like so:
+
+docker build -t mytag:0.1 .
+Let's say that you have this structure:
+
+/home/me/myapp/
+├── Dockerfile
+├── theapp.py
+And you invoke the docker build command from /home/me/myapp - you will pass the current working 
+directory as the build context. This means that docker will see the following filestructure when building:
+
+/
+├── Dockerfile
+├── theapp.py
+Dockerfile
+In the context of a Dockerfile, it means that same. Both inside and outside the image.
+
+Take this COPY instruction for example:
+
+COPY . /app
+Here the . means the current working directory, where the docker build command is executed. 
+This will be relative the to build context that is passed to the docker build command.
+
+For this COPY instruction:
+
+COPY theapp.py .
+It means, take the file theapp.py and copy it to the working directory of the docker image 
+that is being built. This directory can be set at build time with the WORKDIR instruction, so that:
+
+WORKDIR /app
+COPY theapp.py .
+Would leave you with the file /app/theapp.py inside the resulting docker image.
+
+Finally, this COPY instruction:
+
+COPY . .
+Means take everything from the working directory where the docker build command is issued, 
+relative to the build context that is passed to it. And copy it to the current working 
+directory of the docker image.
+
+
+docker-compose run django django-admin startproject core .
+docker exec -it postgres psql -U postgres
+
+docker-compose up / down
+
+Postgres
+==========
+
+docker exec -it postgres psql -U postgres
+\c <database_name>
+\d
+\d+ <table_name>
+\q
+
+
+==========
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'pgdb',
+        'PORT': 5432,
+    }
+}
