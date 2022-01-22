@@ -69,3 +69,76 @@ DATABASES = {
         'PORT': 5432,
     }
 }
+
+
+
+Docker rmi
+docker rmi removes images by their ID.
+
+To remove the image, you first need to list all the images to get the Image IDs, Image name and other details. By running simple command docker images -a or docker images.
+
+After that you make sure which image want to remove, to do that executing this simple command docker rmi <your-image-id>. Then you can confirm that image has been removed or not by list all the images and check.
+
+Remove multiple images
+There is a way to remove more than one images at a time, when you want to remove multiple specific images. So to do that first get Image IDs simply by listing the images then execute simple followed command.
+
+docker rmi <your-image-id> <your-image-id> ...
+
+Write Images IDs in the command followed by the spaces between them.
+
+Remove all images at once
+To remove all images there is a simple command to do that. docker rmi $(docker images -q)
+
+Here in the above command, there are two command the first which execute in the $() is shell syntax and returns the results whatever executed in that syntax. So in this -q- is a option is used to provide to return the unique IDs,$() returns the results of image IDs and then docker rmi removes all those images.
+
+For More Information:
+Docker CLI docs: rmi
+Docker rm
+docker rm removes containers by their name or ID.
+
+When you have Docker containers running, you first need to stop them before deleting them.
+
+Stop all running containers: docker stop $(docker ps -a -q)
+Delete all stopped containers: docker rm $(docker ps -a -q)
+Remove multiple containers
+You can stop and delete multiple containers by passing the commands a list of the containers you want to remove. The shell syntax $() returns the results of whatever is executed within the brackets. So you can create your list of containers within this to be passed to the stop and rm commands.
+
+Here is a breakdown of docker ps -a -q
+docker ps list containers
+-a the option to list all containers, even stopped ones. Without this, it defaults to only listing running containers
+-q the quiet option to provide only container numeric IDs, rather than a whole table of information about containers
+
+
+You need to add a dot, which means to use the Dockerfile in the local directory.
+
+For example:
+
+docker build -t mytag .
+
+It means you use the Dockerfile in the local directory, and if you use docker 1.5 you can specify a Dockerfile elsewhere. Extract from the help output from docker build:
+
+-f, --file=""        Name of the Dockerfile(Default is 'Dockerfile' at context root)
+
+
+
+
+When run the command 
+
+=> [internal] load build definition from Dockerfile                                                          0.1s 
+=> => transferring dockerfile: 596B                                                                          0.0s 
+=> [internal] load .dockerignore                                                                             0.1s 
+=> => transferring context: 2B                                                                               0.0s 
+=> [internal] load metadata for docker.io/library/python:3                                                  15.7s 
+=> [auth] library/python:pull token for registry-1.docker.io                                                 0.0s 
+=> CACHED [1/6] FROM docker.io/library/python:3@sha256:a780eec51b47c0684d81315d48524b92e84873f93558f8637333  0.0s 
+=> [internal] load build context                                                                           100.8s 
+=> => transferring context: 118.57MB                                                                       100.7s 
+=> [2/6] WORKDIR /code                                                                                       0.1s 
+=> [3/6] COPY requirements.txt /code/                                                                        0.6s 
+=> [4/6] RUN pip install --upgrade pip                                                                       6.1s 
+=> [5/6] RUN pip install -r requirements.txt                                                                32.7s 
+=> [6/6] COPY . /code/                                                                                       2.4s 
+=> exporting to image                                                                                        2.1s 
+=> => exporting layers                                                                                       2.0s 
+=> => writing image sha256:0366a73c0d8b59478670113d9f11da25457f44207ee871c3b681babe3645227a                  0.0s 
+=> => naming to docker.io/library/django-ecommerce:1.0 

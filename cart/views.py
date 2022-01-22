@@ -183,12 +183,12 @@ def add_single_item_to_cart(request, slug):
         messages.info(request, "Item added to cart")
         return redirect("cart:order-summary")
 
-def isAddress(request,user):
+def isAddress(user):
      user_detail= get_object_or_404(UserDetail,user=user)
      if user_detail.address:
          return True
      else:
-         messages.info(request,'Please add the shipping address by updating your profile')
+        #  messages.info(request,'Please add the shipping address by updating your profile')
          return False    
 
 #change the balance and the stock quantity
@@ -202,7 +202,8 @@ def final_checkout(request):
     )
     user_detail =UserDetail.objects.get(user=request.user)
     if not user_detail.address:
-        messages.info(request,'Please fill an address')
+        messages.info(request,'Please fill an address before continuing')
+        return render('cart:order-summary')
 
     #amount spend by the user 
     if order_qs.exists():       
