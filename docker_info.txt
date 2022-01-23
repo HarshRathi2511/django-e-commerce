@@ -142,3 +142,12 @@ When run the command
 => => exporting layers                                                                                       2.0s 
 => => writing image sha256:0366a73c0d8b59478670113d9f11da25457f44207ee871c3b681babe3645227a                  0.0s 
 => => naming to docker.io/library/django-ecommerce:1.0 
+
+
+What is the docker entry-point shell file?
+entry point shell file is created to run the command after the container image in a docker
+ environment. sometimes we need to run command which is related to application configuration,
+  application database migration and application status check, create the scheduler to run 
+  the different tasks, all of the instruction we can declare at entry point shell file, add 
+  those entry point shell file to “ENTRYPOINT” statement in “Dockerfile”. We can add multiple
+   entry-points sh (shell) files as an array format to the “ENTRYPOINT” statement.

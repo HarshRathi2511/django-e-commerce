@@ -16,3 +16,5 @@ RUN pip install -r requirements.txt
 
 #copy the . (current working directory) into  /code/ 
 COPY . /code/
+
+ENTRYPOINT [ "sh","entrypoint.sh" ]

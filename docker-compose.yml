@@ -7,12 +7,13 @@ services:
         command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - ./data/db:/var/lib/postgresql/data
+            - static:/static
         ports:
             - 5432:5432    
-        environment:
-            - POSTGRES_DB= test
-            - POSTGRES_USER= postgres
-            - POSTGRES_PASSWORD= WarMachine007 
+        # environment:
+        #     - POSTGRES_DB= test
+        #     - POSTGRES_USER= postgres
+        #     - POSTGRES_PASSWORD= WarMachine007 
     django:
         build: . 
         container_name: django
@@ -22,7 +23,19 @@ services:
         ports:
             - 8000:8000
         depends_on:
-            - db                        
+            - db   
+    nginx:
+        build: ./nginx
+        volumes:
+            - static:/static 
+        ports:
+          - "80:80"  
+        depends_on:
+          - django  
+
+
+volumes:
+   static:                                   
 
 
 #  {
