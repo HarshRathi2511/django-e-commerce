@@ -30,11 +30,16 @@ SECRET_KEY = DJANGO_SECRET_KEY
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*'  #to allow all the hosts 
+    '*',  #to allow all the hosts 
 ]
 
-
+CSRF_TRUSTED_ORIGINS = [
+    '*',
+],
 # Application definition
+CORS_ORIGIN_WHITELIST = [
+    '*',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',

@@ -146,8 +146,88 @@ When run the command
 
 What is the docker entry-point shell file?
 entry point shell file is created to run the command after the container image in a docker
- environment. sometimes we need to run command which is related to application configuration,
-  application database migration and application status check, create the scheduler to run 
-  the different tasks, all of the instruction we can declare at entry point shell file, add 
-  those entry point shell file to “ENTRYPOINT” statement in “Dockerfile”. We can add multiple
-   entry-points sh (shell) files as an array format to the “ENTRYPOINT” statement.
+environment. sometimes we need to run command which is related to application configuration,
+application database migration and application status check, create the scheduler to run 
+the different tasks, all of the instruction we can declare at entry point shell file, add 
+those entry point shell file to “ENTRYPOINT” statement in “Dockerfile”. We can add multiple
+entry-points sh (shell) files as an array format to the “ENTRYPOINT” statement.
+
+Now, we want to makemigrations and migrate everytime the container starts up.
+ But the problem is that the database container can take longer to initialise and if we 
+ run the above commands before the database is up and running, it can result in an error.
+  So we need a way to make sure the database has started. For this, we use an entrypoint 
+  script. In the djangoproject directory, make a new file called entrypoint.sh with the
+   following contents.
+
+RUN - The Run command is a handy way to quickly run a program in Linux by typing the program 
+and executing it.
+
+WHAT IS NETCAT?
+Netcat is one of the powerful networking tool, security tool or network monitoring tool.
+ It acts like cat command over a network. It is even considered as a Swiss army knife of
+ networking tools.
+It is generally used for the following reasons:
+
+Operation related to TCP, UDP or UNIX-domain sockets
+Port Scanning
+Port listening
+Port redirection
+open Remote connections
+Read/Write data across network
+Network debugging
+Network daemon testing
+Simple TCP proxies
+A Socks or HTTP Proxy Command for ssh
+It is designed by keeping in mind that it should be a flexible “back-end” tool that can be 
+used directly or driven by any other program.
+
+
+ECHO COMMAND 
+In computing, echo is a command that outputs the strings that are passed to it as arguments.
+ ... It is a command available in various operating system shells and typically used in shell 
+ scripts and batch files to output status text to the screen or a computer file, or as a 
+ source part of a pipeline.
+
+ PYTHONUNBUFFERED 
+ to a non empty value ensures that the python output is sent straight to terminal
+
+
+ WORKDIR 
+  Change the working directory. 
+ Every command after this will be run from the /code directoryif /code is the working directory 
+
+
+ REFER TO THIS ARTICLE 
+ https://hedonhermdev.github.io/posts/django-on-docker/
+
+ ENTRYPOINT.SH FILE 
+ What is the use/meaning of "#!/bin/sh" in shell scripting?
+A shell script is a text file that contains a sequence of commands for a UNIX-based operating system. 
+
+
+WHAT DOES THE USER COMMAND SIGNIFY
+https://www.geeksforgeeks.org/docker-user-instruction/  
+By default, a Docker Container runs as a Root user. This poses a great security threat if you 
+deploy your applications on a large scale inside Docker Containers. You can change or switch to a different 
+user inside a Docker Container using the USER Instruction
+
+RUN groupadd -r user && useradd -r -g user user
+USER user
+
+In the above dockerfile, we have pulled the base Image Ubuntu and updated it. We have created a 
+new group called user and a new user inside the group with the same name. Using the USER option,
+we have then switched the user.
+
+
+WHAT DOES THE RUN CHOWN COMMAND DO ?
+https://www.rockyourcode.com/til-docker-chown-copies-all-files/#:~:text=The%20chown%20command%20adds%20another,container%20image%20contains%20both%20layers.
+The chown command adds another layer to the image without deleting the previous layers.
+
+That means, that the final container image contains both layers. Thus, the size of the container 
+adds the size of both folders: the original working directory for the root user, and the second 
+working directory with permissions for the normal user.
+
+Since Docker 17.09.0-ce(2017-09-26) you can add a flag to the copy command:
+
+COPY --chown=<user>:<group>
+This flag avoids the extra layer.
