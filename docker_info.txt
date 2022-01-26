@@ -231,3 +231,9 @@ Since Docker 17.09.0-ce(2017-09-26) you can add a flag to the copy command:
 
 COPY --chown=<user>:<group>
 This flag avoids the extra layer.
+
+
+WHAT ARE DNS RECORDS?
+https://www.cloudwards.net/what-are-dns-records/#:~:text=Types%20of%20DNS%20Records%201%20A%20Record.%20An,4%20TXT%20Record.%20...%205%20AAAA%20Record.%20
+Each website has a specific IP address, and the DNS records pair that IP address 
+to the domain name so users don’t need to remember the numeric line.
