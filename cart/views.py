@@ -197,9 +197,9 @@ def isAddress(user):
 @login_required
 def final_checkout(request):
     #don't let the vendor order be able order stuff
-    if request.user.vendor:
-        messages.info(request,'Vendors cant order from this site !!!')
-        return redirect('cart:order-summary')
+    # if request.user.vendor:
+    #     messages.info(request,'Vendors cant order from this site !!!')
+    #     return redirect('cart:order-summary')
 
     #checks before shipping out 
     user_detail =UserDetail.objects.get(user=request.user)

@@ -257,3 +257,8 @@ You may also want to find a specific term in the file. In that case, you can use
 
 Copied!  Copy code
 grep GET /var/log/nginx/access.log
+
+
+
+WHY IS NGINX AND DJANGO CONTAINER BOTH ABLE TO ACCESS THE SAME STATIC MEDIA FILES ?
+Because of a shared volume between them . 

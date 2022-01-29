@@ -138,13 +138,12 @@ value. So a default value will be placed for the referencing object. This is how
 will operate basically.
 
 
-
-THINGS LEFT IN THE PROJECT 
-
-
+DJANGO ORM RELATION MANAGER
+https://medium.com/hackernoon/django-orm-relationships-cheat-sheet-14433d6cf68c
 
 
+GOOGLE CONSOLE 
+https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 
-ALTER ROLE postgres SET client_encoding TO 'utf8';
-ALTER ROLE postgres SET default_transaction_isolation TO 'read committed';
-ALTER ROLE postgres SET timezone TO 'UTC';
+DOMAINS AND DNS SERVICES
+https://docs.digitalocean.com/products/networking/dns/how-to/manage-records/

@@ -39,7 +39,7 @@ def register(request):
     return render(request, 'user/register.html', {'form': f})   
 
 @login_required
-def write_review(request,slug):
+def write_review(request,slug): 
     if request.method=='POST':
         form = ReviewForm(request.POST)
 
