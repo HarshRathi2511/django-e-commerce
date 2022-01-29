@@ -196,7 +196,7 @@ def isAddress(user):
 # @user_passes_test(isAddress)
 @login_required
 def final_checkout(request):
-    #dont let the vendor order be able order stuff
+    #don't let the vendor order be able order stuff
     if request.user.vendor:
         messages.info(request,'Vendors cant order from this site !!!')
         return redirect('cart:order-summary')
@@ -208,14 +208,10 @@ def final_checkout(request):
         messages.info(request,'Please fill an address before continuing')
         return redirect('cart:order-summary')
 
-
     order_qs = Order.objects.filter(
         user=request.user,
         ordered=False
     )
-    
-  
-
     #amount spend by the user 
     if order_qs.exists():       
         order_qs.update(ordered=True)     
