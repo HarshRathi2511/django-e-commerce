@@ -13,8 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 # from decouple import config
-from .secrets import CLIENT_ID, DJANGO_SECRET_KEY, POSTRGRES_PASS, SECRET, SENDGRID_API_KEY
-from .keyconfig import Database
+from .keyconfig import AllAuth, Database,Sendgrid,Django
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,24 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = DJANGO_SECRET_KEY
+SECRET_KEY = Django.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = [
-#     '*'  #to allow all the hosts 
-# ]
-# CSRF_TRUSTED_ORIGINS = [
-#     'http://localhost:1330'
-# ],
+
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:1330',
-# ]
-# CSRF_TRUSTED_ORIGINS = ['http://localhost:1330']
-# # Application definition
-# CORS_ORIGIN_WHITELIST = ['http://localhost:1330']
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -104,15 +93,6 @@ AUTHENTICATION_BACKENDS = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -177,7 +157,7 @@ LOGIN_URL ='login'
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_HOST_PASSWORD = Sendgrid.KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_EMAIL_FROM = 'f20200794@pilani.bits-pilani.ac.in'
@@ -195,8 +175,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type':'online',
         },
         'APP': {
-            'client_id': CLIENT_ID,
-            'secret': SECRET,
+            'client_id': AllAuth.CLIENT_ID,
+            'secret': AllAuth.SECRET,
             'key': ''
         }
     }
