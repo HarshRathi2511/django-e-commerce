@@ -29,7 +29,7 @@ SECRET_KEY = Django.SECRET_KEY
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1','64.227.171.47']
 
 
 INSTALLED_APPS = [

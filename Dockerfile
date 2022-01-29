@@ -26,5 +26,6 @@ RUN chown -R app:app $APP_HOME
 
 USER app:app
 
+#to fix the user permissions while running entrypoint.sh 
 RUN chmod +x entrypoint.sh
 ENTRYPOINT ["/home/app/web/entrypoint.sh"]
