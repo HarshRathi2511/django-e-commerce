@@ -152,7 +152,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 #redirecting users after login 
 LOGIN_REDIRECT_URL = 'login-redirect'  
-LOGIN_URL ='login'
+LOGIN_URL ='account_login'
 
 # SENDGRID_API_KEY ='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'
 

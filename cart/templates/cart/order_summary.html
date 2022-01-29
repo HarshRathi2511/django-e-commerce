@@ -58,8 +58,9 @@
             <span class="text-muted">${{user_detail.country}}</span>
           </li>
 
-          {% comment %} <a href={% url 'update-user_detail' user_detail.id %}>Update the user_detail</a> {% endcomment %}
-
+         
+    {% else %}
+    <a href = "{% url 'update-address'  %}">Update Address</a> 
      {% endif %}    
 
               <hr class="my-4">

@@ -196,14 +196,20 @@ def isAddress(user):
 @user_passes_test(isAddress)
 @login_required
 def final_checkout(request):
-    order_qs = Order.objects.filter(
-        user=request.user,
-        ordered=False
-    )
+
+    #checks before shipping out 
     user_detail =UserDetail.objects.get(user=request.user)
     if not user_detail.address:
         messages.info(request,'Please fill an address before continuing')
         return render('cart:order-summary')
+
+
+    order_qs = Order.objects.filter(
+        user=request.user,
+        ordered=False
+    )
+    
+  
 
     #amount spend by the user 
     if order_qs.exists():       
