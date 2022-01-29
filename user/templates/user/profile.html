@@ -33,7 +33,13 @@
 
      {% for order_item in order_qs.return_order_items %}
      <small class="text-muted">Title:- {{order_item.item.title}}</small>
+     
+     {% if user.review %}
+       <h6>You already have a review</h6>
+     {% else%}
      <a href = "{% url 'write-review' order_item.get_product_slug%}">Write Review</a>
+     {%endif%}
+
      <small class="text-muted">Quantity:- {{order_item.quantity}}</small>
      
      {% endfor %}

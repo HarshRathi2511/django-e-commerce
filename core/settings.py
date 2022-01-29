@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 # from decouple import config
 from .secrets import CLIENT_ID, DJANGO_SECRET_KEY, POSTRGRES_PASS, SECRET, SENDGRID_API_KEY
-
+from .keyconfig import Database
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,10 +29,16 @@ SECRET_KEY = DJANGO_SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '*'  #to allow all the hosts 
-]
-
+# ALLOWED_HOSTS = [
+#     '*'  #to allow all the hosts 
+# ]
+# CSRF_TRUSTED_ORIGINS = [
+#     'http://localhost:1330'
+# ],
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:1330',
+# ]
 # CSRF_TRUSTED_ORIGINS = ['http://localhost:1330']
 # # Application definition
 # CORS_ORIGIN_WHITELIST = ['http://localhost:1330']
@@ -110,11 +116,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test', 
-        'USER': 'postgres', 
-        'PASSWORD': 'postgres',
-        'HOST': 'db', 
-        'PORT': '5432',
+        'NAME': Database.NAME, 
+        'USER': Database.USER, 
+        'PASSWORD': Database.PASSWORD,
+        'HOST': Database.HOST, 
+        'PORT': Database.PORT,
     }
 }
 
@@ -152,9 +158,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -162,6 +165,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL ='/media/'
 MEDIA_ROOT =os.path.join(BASE_DIR,'media/')
+
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 #redirecting users after login 
 LOGIN_REDIRECT_URL = 'login-redirect'  
