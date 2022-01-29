@@ -46,7 +46,7 @@
            
           </div>
    
-   {% if user_detail%}       
+   {% if user_detail.address%}       
    <h4>Your Shipping Address</h4>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
@@ -65,7 +65,14 @@
 
               <hr class="my-4">
     
-              <button class="w-100 btn btn-primary btn-lg" type="submit"> <a href ="{% url 'cart:final-checkout' %}">Place order</a> </button>
+              {% comment %} <button class="w-100 btn btn-primary btn-lg" type="submit"> <a href ="{% url 'cart:final-checkout' %}">Place order</a> </button> {% endcomment %}
+
+                
+              <a href="{% url 'cart:final-checkout' %}" class="btn btn-primary btn-md my-0 p">
+                Place your order 
+                <i class="fas fa-shopping-cart ml-1"></i>
+              </a>
+
             </form>
           </div>
         </div>

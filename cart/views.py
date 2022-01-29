@@ -193,7 +193,7 @@ def isAddress(user):
 
 #change the balance and the stock quantity
 #final checkout and set the order 
-@user_passes_test(isAddress)
+# @user_passes_test(isAddress)
 @login_required
 def final_checkout(request):
 

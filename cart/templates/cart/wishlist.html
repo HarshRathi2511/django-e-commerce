@@ -3,6 +3,9 @@
 {%block title%}Wishlist {% endblock%}
 {%block content%}
 <h1>Wishlist</h1>
+{% if not items %}
+<h4>Add some items to the wishlist!</h4>
+{%endif%}
 {% for item in items%}
 <h4>-> <a href="{% url 'store:product_detail' item.item.slug%}">{{item.item}},</a> ${{item.item.price}}  Sold by {{item.vendor}} .............................  
    <a href ="{% url 'cart:remove-from-wishlist' item.item.slug%}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
