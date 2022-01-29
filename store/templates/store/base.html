@@ -37,13 +37,13 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="{% url "store:home_products" %}">All</a></li>
-                                {% comment %} {% if catgeories%}  
+                                {% if catgeories%}  
                                  {% for c in categories %}
                                   <li {% if category.slug == c.slug %}class="selected" {% endif %}> 
                                    <a class="dropdown-item" href="{{ c.get_absolute_url }}">{{ c.name|title }}</a> 
                                   </li>
                                  {% endfor %}  
-                                {% endif %} {% endcomment %}
+                                {% endif %}
                             </ul>
                         </li>
                     </ul>
@@ -51,7 +51,7 @@
 
                       <a class="nav-item nav-link" href="{%url 'profile'%}">Profile</a>
                       <a class="nav-item nav-link" href="{%url 'cart:wishlist'%}">Wishlist</a>
-                      <a class="nav-item nav-link" href="{%url 'logout'%}">Logout</a>
+                      <a class="nav-item nav-link" href="{%url 'account_logout'%}">Logout</a>
 
                       {% comment %} <a class="nav-item nav-link" href="{%url 'cart:export_data'%}">Export Orders</a> {% endcomment %}
                       <a type="button" role="button" href="{% url "cart:order-summary" %}"
