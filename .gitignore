@@ -1,0 +1,5 @@
+vendor/__pycache__/
+user/__pycache__/
+store/__pycache__/
+core/__pycache__/
+cart/__pycache__/
