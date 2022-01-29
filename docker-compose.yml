@@ -24,6 +24,7 @@ services:
       - db
     volumes:
       - staticfiles:/home/app/web/staticfiles
+      - code:/home/app/web
   nginx:
     container_name: nginx
     image: nginx:mainline-alpine
