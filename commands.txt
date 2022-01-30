@@ -18,3 +18,12 @@ python manage.py makemigrations user vendor store cart
 python manage.py migrate 
 python manage.py createsuperuser
 
+
+VOLUMES 
+docker volume rm <name>
+docker volume list 
+docker volume inspect <name > 
+    
+    
+TO LIST COMPUTER FILES 
+sudo ls <path>    
