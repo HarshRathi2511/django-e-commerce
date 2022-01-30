@@ -1,4 +1,5 @@
 from fileinput import filename
+import re
 from django.http import HttpResponse
 from urllib import response
 from django.contrib import messages
@@ -41,6 +42,9 @@ class OrderSummaryView(LoginRequiredMixin,View):
 # Change LOGIN_URL in settings.py          
 @login_required
 def add_to_cart(request, slug):
+    if request.user.vendor.exists:
+        messages.info(request,'Vendors cant add products in cart')
+        return render('store:product_detail')
     # get the product and create the order item
     product = get_object_or_404(Product, slug=slug)
     # do not create new order item if it already in cart
