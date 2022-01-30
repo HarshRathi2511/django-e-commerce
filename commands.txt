@@ -1,6 +1,20 @@
-sudo nano /etc/nginx/sites-available/core
+COMMANDS COMMONLY USED TO NOT WASTE TIME 
 
+sudo nano /etc/nginx/sites-available/core
 
 git add . 
 git commit -m "changes"
 git push -u origin master 
+WarMachine007
+
+cd /var/www
+git fetch origin 
+git merge origin/master
+
+docker-compose down -v 
+docker-compose up --build 
+
+python manage.py makemigrations user vendor store cart 
+python manage.py migrate 
+python manage.py createsuperuser
+
