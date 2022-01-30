@@ -16,6 +16,7 @@ from cart.models import OrderItem, Order
 import user
 from user.models import Profile, UserDetail
 from user.views import profile
+from vendor.models import Vendor
 from .models import Product, WishlistItem
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -29,6 +30,9 @@ class OrderSummaryView(LoginRequiredMixin,View):
     def get(self,*args,**kwargs):
         #add checks 
         try:
+            if Vendor.objects.filter(user=request.user).exists:
+                messages.info(request,'Vendors cant buy!')
+                return render('store:product_detail')
             orders = Order.objects.get(user=self.request.user,ordered=False)
             user_detail=get_object_or_404(UserDetail,user=self.request.user)
             context={'orders':orders,'user_detail':user_detail}
@@ -42,7 +46,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
 # Change LOGIN_URL in settings.py          
 @login_required
 def add_to_cart(request, slug):
-    if request.user.vendor.exists:
+    if Vendor.objects.filter(user=request.user).exists:
         messages.info(request,'Vendors cant add products in cart')
         return render('store:product_detail')
     # get the product and create the order item
