@@ -33,7 +33,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                Categories
+                                The Categories
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="{% url "store:home_products" %}">All</a></li>
@@ -50,7 +50,7 @@
                     {% if user.is_authenticated%}  
 
                       <a class="nav-item nav-link" href="{%url 'profile'%}">Profile</a>
-                      <a class="nav-item nav-link" href="{%url 'cart:wishlist'%}">Wishlist</a>
+                      <a class="nav-item nav-link" href="{%url 'cart:wishlist'%}">Your Wishlist</a>
                       <a class="nav-item nav-link" href="{%url 'account_logout'%}">Logout</a>
 
                       {% comment %} <a class="nav-item nav-link" href="{%url 'cart:export_data'%}">Export Orders</a> {% endcomment %}

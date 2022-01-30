@@ -262,3 +262,7 @@ grep GET /var/log/nginx/access.log
 
 WHY IS NGINX AND DJANGO CONTAINER BOTH ABLE TO ACCESS THE SAME STATIC MEDIA FILES ?
 Because of a shared volume between them . 
+
+
+COMMAND 
+docker-compose down && docker-compose build --no-cache && docker-compose up --force-recreate
