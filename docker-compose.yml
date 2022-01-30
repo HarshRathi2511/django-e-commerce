@@ -24,7 +24,6 @@ services:
       - db
     volumes:
       - staticfiles:/home/app/web/staticfiles
-      - code:/home/app/web
       - mediafiles:/home/app/web/media
   nginx:
     container_name: nginx
@@ -41,5 +40,4 @@ services:
 volumes:
   postgres-data:
   staticfiles:
-  code:
   mediafiles:
