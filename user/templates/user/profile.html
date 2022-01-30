@@ -39,7 +39,7 @@
        <h6>You already have a review</h6>
      {% else%} {% endcomment %}
      <a href = "{% url 'write-review' order_item.get_product_slug%}">Write Review</a>
-     {%endif%}
+     
 
      <small class="text-muted">Quantity:- {{order_item.quantity}}</small>
      

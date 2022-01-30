@@ -31,7 +31,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
         #add checks 
         try:
             if Vendor.objects.filter(created_by=self.request.user).exists:
-                messages.info(request,'Vendors cant buy!')
+                messages.info(self.request,'Vendors cant buy!')
                 return redirect('store:product_detail')
             orders = Order.objects.get(user=self.request.user,ordered=False)
             user_detail=get_object_or_404(UserDetail,user=self.request.user)
