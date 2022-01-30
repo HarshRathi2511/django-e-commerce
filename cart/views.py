@@ -30,7 +30,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
     def get(self,*args,**kwargs):
         #add checks 
         try:
-            if Vendor.objects.filter(user=request.user).exists:
+            if Vendor.objects.filter(created_by=request.user).exists:
                 messages.info(request,'Vendors cant buy!')
                 return render('store:product_detail')
             orders = Order.objects.get(user=self.request.user,ordered=False)
@@ -46,7 +46,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
 # Change LOGIN_URL in settings.py          
 @login_required
 def add_to_cart(request, slug):
-    if Vendor.objects.filter(user=request.user).exists:
+    if Vendor.objects.filter(created_by=request.user).exists:
         messages.info(request,'Vendors cant add products in cart')
         return render('store:product_detail')
     # get the product and create the order item
