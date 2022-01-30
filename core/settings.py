@@ -153,14 +153,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 LOGIN_REDIRECT_URL = 'login-redirect'  
 LOGIN_URL ='account_login'
 
-# SENDGRID_API_KEY ='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'
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = Sendgrid.KEY
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-DEFAULT_EMAIL_FROM = 'f20200794@pilani.bits-pilani.ac.in'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = Sendgrid.KEY
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# DEFAULT_EMAIL_FROM = 'f20200794@pilani.bits-pilani.ac.in'
 
 
 SITE_ID=1

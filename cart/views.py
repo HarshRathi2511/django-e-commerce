@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.generic.base import View
-from cart.emails import notify_customer, notify_vendor
+# from cart.emails import notify_customer, notify_vendor
 from cart.models import OrderItem, Order
 import user
 from user.models import Profile, UserDetail
@@ -241,7 +241,7 @@ def final_checkout(request):
                 # notify_vendor(order_item)
 
         #finally notify the customer by passing in the latest order 
-        notify_customer(order)        
+        # notify_customer(order)        
         
         messages.info(request,'Your order has been placed and a confirmation email has been sent !')
 
