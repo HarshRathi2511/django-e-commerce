@@ -153,7 +153,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 LOGIN_REDIRECT_URL = 'login-redirect'  
 LOGIN_URL ='account_login'
 
-
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 # EMAIL_HOST = 'smtp.sendgrid.net'
 # EMAIL_HOST_USER = 'apikey'
 # EMAIL_HOST_PASSWORD = Sendgrid.KEY
