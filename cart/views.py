@@ -274,9 +274,9 @@ def wishlist(request):
 
 @login_required
 def add_to_wishlist(request,slug):
-    if Vendor.objects.filter(created_by=request.user).exists:
-                messages.info(request,'Sign up as a shopper to add products to wishlist!')
-                return redirect('store:home_products')
+    # if Vendor.objects.filter(created_by=request.user).exists:
+    #             messages.info(request,'Sign up as a shopper to add products to wishlist!')
+    #             return redirect('store:home_products')
     product= get_object_or_404(Product,slug=slug)
     vendor = product.created_by
     WishlistItem.objects.create(item=product,user=request.user,vendor=vendor)
