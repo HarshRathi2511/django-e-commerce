@@ -11,7 +11,7 @@ cd /var/www
 git fetch origin 
 git merge origin/master
 
-docker-compose down -v 
+docker-compose down 
 docker-compose up --build 
 
 python manage.py makemigrations user vendor store cart 

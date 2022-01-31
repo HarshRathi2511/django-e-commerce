@@ -264,12 +264,18 @@ def final_checkout(request):
 #WISHLIST FUNCTIONS 
 @login_required
 def wishlist(request):
+    if Vendor.objects.filter(created_by=request.user).exists:
+                messages.info(request,'Sign up as a shopper to access and create a wishlist!')
+                return redirect('store:home_products')
     wishlist_items =WishlistItem.objects.filter(user=request.user)
     context= {'items': wishlist_items}
     return render(request,'cart/wishlist.html',context)
 
 @login_required
 def add_to_wishlist(request,slug):
+    if Vendor.objects.filter(created_by=request.user).exists:
+                messages.info(request,'Sign up as a shopper to add products to wishlist!')
+                return redirect('store:home_products')
     product= get_object_or_404(Product,slug=slug)
     vendor = product.created_by
     WishlistItem.objects.create(item=product,user=request.user,vendor=vendor)
