@@ -56,7 +56,7 @@ def write_review(request,slug):
             product= get_object_or_404(Product,slug=slug)
             review.product= product
             #add the order_item 
-            order_item= get_object_or_404(OrderItem,item= product)
+            order_item= OrderItem.objects.get(item= product).first()
             review.order_item = order_item
             review.save()
             messages.info(request,'Your review has been added successfully')
