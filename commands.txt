@@ -27,3 +27,6 @@ docker volume inspect <name >
     
 TO LIST COMPUTER FILES 
 sudo ls <path>    
+
+NGINX 
+sudo systemctl restart nginx    
