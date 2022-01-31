@@ -10,9 +10,9 @@ from vendor.models import Vendor
 from .forms import CustomUserCreationForm, ProfileForm, ReviewForm, UserAddressForm
 
 def profile(request):
-    if Vendor.objects.filter(created_by=request.user).exists:
-                messages.info(request,'Sign up as a shopper to access your profile!')
-                return redirect('store:home_products')
+    # if Vendor.objects.filter(created_by=request.user).exists:
+    #             messages.info(request,'Sign up as a shopper to access your profile!')
+    #             return redirect('store:home_products')
     orders_by_user= Order.objects.filter(user=request.user,ordered=True).order_by('-ordered_date')
     user_detail = get_object_or_404(UserDetail,user=request.user)
     form = UserAddressForm(instance=user_detail)

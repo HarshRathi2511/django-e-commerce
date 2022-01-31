@@ -30,7 +30,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
     def get(self,*args,**kwargs):
         #add checks 
         try:
-            # if Vendor.objects.filter(created_by=self.request.user).exists:
+            # if Vendor.objects.get(created_by=self.request.user).exists:
             #     messages.info(self.request,'Vendors cant buy!')
             #     return redirect('store:home_products')
             orders = Order.objects.get(user=self.request.user,ordered=False)
@@ -265,9 +265,9 @@ def final_checkout(request):
 #WISHLIST FUNCTIONS 
 @login_required
 def wishlist(request):
-    if Vendor.objects.filter(created_by=request.user).exists:
-                messages.info(request,'Sign up as a shopper to access and create a wishlist!')
-                return redirect('store:home_products')
+    # if Vendor.objects.filter(created_by=request.user).exists:
+    #             messages.info(request,'Sign up as a shopper to access and create a wishlist!')
+    #             return redirect('store:home_products')
     wishlist_items =WishlistItem.objects.filter(user=request.user)
     context= {'items': wishlist_items}
     return render(request,'cart/wishlist.html',context)
